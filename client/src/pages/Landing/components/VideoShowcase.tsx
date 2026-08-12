@@ -40,14 +40,7 @@ const VideoShowcase: FC = () => {
             style={{ filter: 'brightness(0.9) contrast(1.1)' }}
           />
 
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 18%, rgba(0,0,0,0) 82%, rgba(0,0,0,1) 100%)',
-            }}
-          />
+
         </div>
       </div>
     </section>
