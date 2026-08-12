@@ -139,10 +139,10 @@ export const CmsHomeView: React.FC = () => {
   const [editData, setEditData] = useState<HomePageData>(emptyData);
   const [isEditing, setIsEditing] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: 'success' | 'error' } | null>(null);
-  
   const [caseStudiesFiles, setCaseStudiesFiles] = useState<{ [index: number]: File }>({});
   const [trustedBrandsFiles, setTrustedBrandsFiles] = useState<{ [index: number]: File }>({});
   const [productCategoriesFiles, setProductCategoriesFiles] = useState<{ [index: number]: File }>({});
+  const [servicesFiles, setServicesFiles] = useState<{ [index: number]: File }>({});
 
   const { data: liveData, isLoading: loading } = useQuery({
     queryKey: ['cms-home-page'],
@@ -187,15 +187,18 @@ export const CmsHomeView: React.FC = () => {
       Object.entries(caseStudiesFiles).forEach(([idx, file]) => allFiles[`caseStudiesImage_${idx}`] = file);
       Object.entries(trustedBrandsFiles).forEach(([idx, file]) => allFiles[`trustedBrandsImage_${idx}`] = file);
       Object.entries(productCategoriesFiles).forEach(([idx, file]) => allFiles[`productCategoriesImage_${idx}`] = file);
+      Object.entries(servicesFiles).forEach(([idx, file]) => allFiles[`servicesImage_${idx}`] = file);
       
       await homePageApi.updateHomePageData(editData, Object.keys(allFiles).length ? allFiles : undefined);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cms-home-page'] });
+      queryClient.invalidateQueries({ queryKey: ['landing-page'] });
       setIsEditing(false);
       setCaseStudiesFiles({});
       setTrustedBrandsFiles({});
       setProductCategoriesFiles({});
+      setServicesFiles({});
       showToast('Home page saved successfully!', 'success');
     },
     onError: () => {
@@ -211,6 +214,7 @@ export const CmsHomeView: React.FC = () => {
     setCaseStudiesFiles({});
     setTrustedBrandsFiles({});
     setProductCategoriesFiles({});
+    setServicesFiles({});
   };
 
   // ── Edit data handlers ───────────────────────────────────────────────────
@@ -267,6 +271,20 @@ export const CmsHomeView: React.FC = () => {
     }
   };
 
+  // --- Services Handlers ---
+  const addService = () => setEditData(p => ({ ...p, services: [...(p.services || []), { title: '', subtitle: '' }] }));
+  const removeService = (i: number) => {
+    setEditData(p => ({ ...p, services: (p.services || []).filter((_, x) => x !== i) }));
+    const newFiles = { ...servicesFiles }; delete newFiles[i]; setServicesFiles(newFiles);
+  };
+  const setServiceField = (i: number, field: 'title' | 'subtitle', val: string) => {
+    const arr = [...(editData.services || [])]; arr[i] = { ...arr[i], [field]: val };
+    setEditData(p => ({ ...p, services: arr }));
+  };
+  const handleServiceFile = (i: number, file: File | null) => {
+    if (file) setServicesFiles(prev => ({ ...prev, [i]: file }));
+    else { const newF = { ...servicesFiles }; delete newF[i]; setServicesFiles(newF); }
+  };
 
   // --- Case Studies Handlers ---
   const addCaseStudy = () => setEditData(p => ({ ...p, caseStudies: [...(p.caseStudies || []), { client: '', challenge: '', solution: '', result: '', metric: '' }] }));
@@ -684,6 +702,50 @@ export const CmsHomeView: React.FC = () => {
         )}
       </div>
 
+
+      {/* ─────────────── SECTION 6 — SERVICES ─────────────── */}
+      <div style={card}>
+        <SectionHeader
+          icon={<Layers size={20} color={theme.colors.prussianBlue} />}
+          title="What We Do (Services)"
+          subtitle="Manage the service pillars displayed in the 'What We Do' section on the landing page."
+        />
+        {!isEditing ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+            {d.services?.length === 0 && <p style={{ color: theme.colors.adminTextMuted, fontSize: 14 }}>No services added.</p>}
+            {d.services?.map((svc, i) => (
+              <div key={i} style={{ border: `1px solid ${theme.colors.adminBorder}`, borderRadius: 12, padding: 16 }}>
+                <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 4, color: theme.colors.adminText }}>{svc.title || 'Untitled'}</div>
+                <div style={{ fontSize: 13, color: theme.colors.adminTextMuted, marginBottom: 12 }}>{svc.subtitle}</div>
+                {svc.image?.url ? <img src={svc.image.url} alt="Service" style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8 }} /> : <div style={{ width: '100%', height: 120, backgroundColor: '#f1f5f9', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: theme.colors.adminTextLight }}>No image</div>}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            {editData.services?.map((svc, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 16, border: `1px solid ${theme.colors.adminBorder}`, borderRadius: 12, backgroundColor: '#F8FAFC', position: 'relative' }}>
+                <button onClick={() => removeService(i)} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', color: theme.colors.adminDanger, cursor: 'pointer' }}><Trash2 size={16} /></button>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Title</label>
+                    <input style={input} value={svc.title} onChange={e => setServiceField(i, 'title', e.target.value)} placeholder="e.g. Pre-Opening Consulting" />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Subtitle / Description</label>
+                    <input style={input} value={svc.subtitle} onChange={e => setServiceField(i, 'subtitle', e.target.value)} placeholder="Description..." />
+                  </div>
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Image</label>
+                    {servicesFiles[i] ? <div style={{ fontSize: 13, color: theme.colors.prussianBlue }}>{servicesFiles[i].name} <button onClick={() => handleServiceFile(i, null)} style={{ border: 'none', background: 'none', color: theme.colors.adminDanger, cursor: 'pointer', marginLeft: 8 }}>Remove</button></div> : svc.image?.url ? <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}><img src={svc.image.url} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 4 }} /><input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleServiceFile(i, e.target.files[0])} style={{ fontSize: 13 }} /></div> : <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleServiceFile(i, e.target.files[0])} style={{ fontSize: 13 }} />}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <button onClick={addService} style={addRowBtn}><Plus size={16} /> Add Service</button>
+          </div>
+        )}
+      </div>
 
       {/* ─────────────── SECTION 7 — CASE STUDIES ─────────────── */}
       <div style={card}>

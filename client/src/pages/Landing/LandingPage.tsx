@@ -46,7 +46,7 @@ const LandingPage: FC = () => {
       <TrustedBrands data={data?.trustedBrands} />
 
       {/* 4. Services (Dark) */}
-      <ServicesSection />
+      <ServicesSection data={data?.services} />
 
       {/* 6. Portfolio (Dark) */}
       <PortfolioSection data={data?.featuredProjects} />

@@ -400,7 +400,7 @@ export const updateLeadStatus = async (req: Request, res: Response): Promise<voi
     const lead = await Lead.findByIdAndUpdate(
       req.params.id,
       { status, isPartial: false },
-      { returnDocument: 'after', runValidators: true }
+      { new: true, runValidators: true }
     );
 
     if (!lead) {

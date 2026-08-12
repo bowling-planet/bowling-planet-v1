@@ -33,7 +33,7 @@ export const updateGlobalSettings = async (req: Request, res: Response): Promise
     const updatedData = await GlobalSettings.findOneAndUpdate(
       {},
       { $set: updatePayload },
-      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     );
 
     // Invalidate Cache

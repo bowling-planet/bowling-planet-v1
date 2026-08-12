@@ -85,7 +85,7 @@ export const updateServicesPageData = async (req: Request, res: Response): Promi
     const updatedData = await ServicesPage.findOneAndUpdate(
       {},
       { $set: updatePayload },
-      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     );
 
     cachedServicesPageData = null;

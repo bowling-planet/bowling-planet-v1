@@ -324,7 +324,7 @@ const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ data }) => {
   useEffect(() => () => clearHoverTimer(), [clearHoverTimer])
 
   // Use CMS data if available, otherwise fallback to hardcoded
-  const caseStudies = data && data.length > 0 ? data.map((cs, i) => ({
+  const caseStudies = Array.isArray(data) ? data.map((cs, i) => ({
     id: cs._id || `cs-${i}`,
     client: cs.client,
     challenge: cs.challenge,

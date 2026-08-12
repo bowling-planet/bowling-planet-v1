@@ -283,7 +283,7 @@ export const updateProductItem = async (req: Request, res: Response) => {
 export const incrementPurchaseCount = async (req: Request, res: Response) => {
   try {
     const { by = 1 } = req.body;
-    const item = await ProductItem.findByIdAndUpdate(req.params.id, { $inc: { purchaseCount: by } }, { returnDocument: 'after' });
+    const item = await ProductItem.findByIdAndUpdate(req.params.id, { $inc: { purchaseCount: by } }, { new: true });
     if (!item) return res.status(404).json({ success: false, message: 'Product item not found' });
     return res.status(200).json({ success: true, data: item });
   } catch (error: any) {

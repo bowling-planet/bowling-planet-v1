@@ -99,7 +99,7 @@ export const updateHomePageData = async (req: Request, res: Response): Promise<v
     const updatedData = await HomePage.findOneAndUpdate(
       {}, // Match the first document
       { $set: updatePayload }, // Apply updates
-      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     ).populate('featuredProjects.projectIds');
 
     // 2. Invalidate Cache so next GET request fetches fresh data

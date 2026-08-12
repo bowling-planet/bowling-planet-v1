@@ -138,7 +138,7 @@ const TrustedBrands: FC<{ data?: { name: string, image?: { url: string, public_i
   const [selected, setSelected] = useState<BrandInfo | null>(null)
 
   const activeBrands: BrandInfo[] =
-    data && data.length > 0
+    data && Array.isArray(data)
       ? data.map(
           (dbBrand) => {
             const hardcodedBrand = BRANDS.find((b) => b.name === dbBrand.name);

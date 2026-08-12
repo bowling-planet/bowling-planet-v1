@@ -265,7 +265,7 @@
 //         const project = await Project.findOneAndUpdate(
 //             { _id: req.params.id, isDeleted: false },
 //             { isPublished: req.body.isPublished },
-//             { returnDocument: 'after' }
+//             { new: true }
 //         );
 
 //         if (!project) {
@@ -651,7 +651,7 @@ export const togglePublishProject = async (req: Request, res: Response) => {
         const project = await Project.findOneAndUpdate(
             { _id: req.params.id, isDeleted: false },
             { isPublished: req.body.isPublished },
-            { returnDocument: 'after' }
+            { new: true }
         );
 
         if (!project) {

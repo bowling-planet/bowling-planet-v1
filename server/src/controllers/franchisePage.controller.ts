@@ -79,7 +79,7 @@ export const updateFranchisePage = async (req: Request, res: Response) => {
     const updated = await FranchisePage.findOneAndUpdate(
       {},
       { $set: updateData },
-      { returnDocument: 'after', upsert: true }
+      { new: true, upsert: true }
     );
 
     // Update cache

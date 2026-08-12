@@ -464,9 +464,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
-  // Fetch published projects from the landing API unless explicit data was passed in
   useEffect(() => {
-    if (data?.projectIds?.length) {
+    if (data && Array.isArray(data.projectIds)) {
       setIsLoading(false)
       return
     }
@@ -496,7 +495,7 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
   }, [data])
 
   const projects = useMemo(() => {
-    if (data?.projectIds?.length) {
+    if (data && Array.isArray(data.projectIds)) {
       return data.projectIds.map((p, i) => ({
         id: String(p._id || p.id || i),
         slug: p.slug,
