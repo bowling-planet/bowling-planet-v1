@@ -541,7 +541,7 @@ const Hero: FC<{ data?: any, services?: any[] }> = ({ data, services }) => {
                       onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.9)'}
                       onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}
                     >
-                      {item.subtitle || item.desc}
+                      {item.shortDescription || item.subtitle || item.desc}
                     </p>
                   </div>
                 </motion.div>

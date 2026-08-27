@@ -291,12 +291,12 @@ export const CmsHomeView: React.FC = () => {
   };
 
   // --- Services Handlers ---
-  const addService = () => setEditData(p => ({ ...p, services: [...(p.services || []), { step: '', eyebrow: '', title: '', subtitle: '', bullets: [], color: '#000000', rgb: '0,0,0' }] }));
+  const addService = () => setEditData(p => ({ ...p, services: [...(p.services || []), { step: '', eyebrow: '', title: '', subtitle: '', shortDescription: '', bullets: [], color: '#000000', rgb: '0,0,0' }] }));
   const removeService = (i: number) => {
     setEditData(p => ({ ...p, services: (p.services || []).filter((_, x) => x !== i) }));
     const newFiles = { ...servicesFiles }; delete newFiles[i]; setServicesFiles(newFiles);
   };
-  const setServiceField = (i: number, field: 'step' | 'eyebrow' | 'title' | 'subtitle' | 'color' | 'rgb', val: string) => {
+  const setServiceField = (i: number, field: 'step' | 'eyebrow' | 'title' | 'subtitle' | 'shortDescription' | 'color' | 'rgb', val: string) => {
     const arr = [...(editData.services || [])]; arr[i] = { ...arr[i], [field]: val };
     setEditData(p => ({ ...p, services: arr }));
   };
@@ -872,6 +872,11 @@ export const CmsHomeView: React.FC = () => {
                   <div style={{ gridColumn: '1 / -1' }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Subtitle / Description</label>
                     <textarea style={{ ...input, minHeight: 80, resize: 'vertical' }} value={svc.subtitle} onChange={e => setServiceField(i, 'subtitle', e.target.value)} placeholder="Description..." />
+                  </div>
+                  
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Short Description (Hero Section)</label>
+                    <textarea style={{ ...input, minHeight: 60, resize: 'vertical' }} value={svc.shortDescription || ''} onChange={e => setServiceField(i, 'shortDescription', e.target.value)} placeholder="Shorter description specifically for the Hero section..." />
                   </div>
                   
                   {/* Bullets */}

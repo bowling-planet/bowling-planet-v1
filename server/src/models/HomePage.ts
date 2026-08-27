@@ -33,6 +33,7 @@ export interface IHomePage extends Document {
     eyebrow: string;
     title: string;
     subtitle: string;
+    shortDescription?: string;
     bullets: string[];
     color: string;
     rgb: string;
@@ -95,6 +96,7 @@ const HomePageSchema: Schema = new Schema(
           eyebrow: String,
           title: String,
           subtitle: String,
+          shortDescription: String,
           bullets: [String],
           color: String,
           rgb: String,

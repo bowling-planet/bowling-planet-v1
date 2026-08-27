@@ -75,6 +75,7 @@ const DEFAULT_SERVICES = [
     eyebrow: 'Phase One',
     title: 'Pre-Opening Consulting',
     subtitle: 'We partner with you before a single brick is laid — running location analytics, modeling your ROI, designing the optimal floor layout, and building the team that will make your opening day unforgettable.',
+    shortDescription: 'Data-driven location analysis, ROI modeling, and 3D architectural design.',
     bullets: [
       'Location analytics & feasibility',
       'ROI & financial modeling',
@@ -92,6 +93,7 @@ const DEFAULT_SERVICES = [
     eyebrow: 'Phase Two',
     title: 'Operations Management',
     subtitle: 'Running a profitable FEC demands operational excellence every day. We design your SOPs, HR frameworks, finance structures, and data-driven marketing engines — then monitor KPIs continuously.',
+    shortDescription: 'Staff training, operational SOPs, and full facility management.',
     bullets: [
       'SOP & process documentation',
       'HR frameworks & team structure',
@@ -109,6 +111,7 @@ const DEFAULT_SERVICES = [
     eyebrow: 'Distribution',
     title: 'Equipment Supply',
     subtitle: 'We source and distribute world-class FEC equipment globally — from a single arcade cabinet to a complete multi-zone entertainment destination, turnkey. ROI-modeled game selection included.',
+    shortDescription: 'Procurement of premium arcade games, bowling lanes, and global sourcing.',
     bullets: [
       'Bowling lanes & pinsetters',
       'VR & immersive technology',

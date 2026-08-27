@@ -36,6 +36,7 @@ export interface HomePageData {
     eyebrow: string;
     title: string;
     subtitle: string;
+    shortDescription?: string;
     bullets: string[];
     color: string;
     rgb: string;
