@@ -21,6 +21,7 @@ import { BlogEditorPage } from './views/cms/blog/components/BlogEditorPage';
 import { MediaManagement } from './views/media/MediaManagement';
 import { CmsServicesView } from './views/cms/services/CmsServicesView';
 import CmsServiceDetailsView from './views/cms/services/CmsServiceDetailsView';
+import CmsAboutView from './views/cms/about/CmsAboutPage';
 
 export default function AdminPage() {
   return (
@@ -57,12 +58,12 @@ export default function AdminPage() {
 
         <Route path="cms/resources" element={<CmsResourceView />} />
         <Route path="cms/settings" element={<CmsSettingsView />} />
-        <Route path="cms/team" element={<CmsTeamView />} />
+        <Route path="cms/about" element={<CmsAboutView />} />
         <Route path="cms/services" element={<CmsServicesView />} />
         <Route path="cms/service-details" element={<CmsServiceDetailsView />} />
 
         {/* Placeholders for future views */}
-        <Route path="media" element={<MediaManagement/>} />
+        <Route path="media" element={<MediaManagement />} />
 
         {/* Catch-all redirect back to dashboard */}
         <Route path="*" element={<Navigate to="/admin" replace />} />

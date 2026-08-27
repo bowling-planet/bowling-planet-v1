@@ -209,7 +209,7 @@ const BlogPreviewSection: FC = () => {
           <div>
             <div className="label" style={{ marginBottom: 16 }}>Insights</div>
             <h2 className="font-display landing-section-heading" style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)', margin: 0 }}>
-              The Playbook.
+              Blogs and Resources
             </h2>
           </div>
           <Link

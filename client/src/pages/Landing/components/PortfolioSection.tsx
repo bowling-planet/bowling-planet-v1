@@ -515,6 +515,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
   const filtered =
     activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter)
 
+  console.log(filtered)
+
   // Keep selection valid when filter changes
   useEffect(() => {
     if (!filtered.length) {
@@ -581,11 +583,10 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                 key={cat}
                 type="button"
                 onClick={() => setActiveFilter(cat)}
-                className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                  isActive
+                className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${isActive
                     ? 'border-[#5FC1D1] bg-[#5FC1D1]/15 text-[#5FC1D1]'
                     : 'border-white/15 bg-[#111118] text-[#A1A1A6] hover:border-[#5FC1D1]/40 hover:text-[#F5F5F7]'
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -606,8 +607,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
             {/* Mobile View: Horizontal Carousel */}
             <div className="flex gap-4 overflow-x-auto pb-6 snap-x snap-mandatory lg:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {filtered.map((project) => (
-                <div 
-                  key={project.id} 
+                <div
+                  key={project.id}
                   className="relative flex-shrink-0 w-[85vw] sm:w-[320px] min-h-[360px] overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0F] snap-center"
                 >
                   <ProjectImage
@@ -616,7 +617,7 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
-                  
+
                   <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end">
                     <div className="mb-3 flex flex-wrap gap-2">
                       <span className="rounded-full border border-[#5FC1D1]/40 bg-[#5FC1D1]/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#5FC1D1] backdrop-blur-md">
@@ -700,9 +701,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                             </span>
                           </div>
                           <h3
-                            className={`truncate text-[15px] font-bold leading-snug transition-colors ${
-                              isActive ? 'text-[#5FC1D1]' : 'text-[#F5F5F7] group-hover:text-[#5FC1D1]'
-                            }`}
+                            className={`truncate text-[15px] font-bold leading-snug transition-colors ${isActive ? 'text-[#5FC1D1]' : 'text-[#F5F5F7] group-hover:text-[#5FC1D1]'
+                              }`}
                           >
                             {project.name}
                           </h3>
@@ -713,11 +713,10 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                         </div>
                         <ArrowUpRight
                           size={16}
-                          className={`shrink-0 transition-all duration-300 ${
-                            isActive
+                          className={`shrink-0 transition-all duration-300 ${isActive
                               ? 'text-[#5FC1D1] translate-x-0 opacity-100'
                               : 'translate-x-1 text-white/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
-                          }`}
+                            }`}
                         />
                         {isActive && (
                           <motion.span

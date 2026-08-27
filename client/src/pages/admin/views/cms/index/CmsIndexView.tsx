@@ -4,80 +4,80 @@ import { LayoutTemplate, ShoppingBag, FolderKanban, FileText, Share2, ChevronRig
 import { theme } from '../../../../../theme';
 
 const cmsCards = [
-  { 
-    title: 'Home Page', 
-    description: 'Edit hero text, highlights, and key landing page sections.', 
-    icon: LayoutTemplate, 
+  {
+    title: 'Home Page',
+    description: 'Edit hero text, highlights, and key landing page sections.',
+    icon: LayoutTemplate,
     path: '/admin/cms/home',
     tag: 'Core'
   },
-  { 
-    title: 'Franchise Page', 
-    description: 'Manage value propositions, investment tiers, and frequently asked questions.', 
-    icon: MonitorPlay, 
+  {
+    title: 'Franchise Page',
+    description: 'Manage value propositions, investment tiers, and frequently asked questions.',
+    icon: MonitorPlay,
     path: '/admin/cms/franchise',
     tag: 'Core'
   },
-  { 
-    title: 'Team Details', 
-    description: 'Manage team member information and roles.', 
-    icon: Users, 
-    path: '/admin/cms/team',
-    tag: 'Team'
+  {
+    title: 'About Page',
+    description: 'Manage about page and team details',
+    icon: Users,
+    path: '/admin/cms/about',
+    tag: 'About'
   },
-  { 
-    title: 'Products', 
-    description: 'Manage product catalog, pricing and availability.', 
-    icon: ShoppingBag, 
+  {
+    title: 'Products',
+    description: 'Manage product catalog, pricing and availability.',
+    icon: ShoppingBag,
     path: '/admin/cms/products',
     tag: 'Catalog'
   },
-  { 
-    title: 'Services Page', 
-    description: 'Manage the standalone services pages content and options.', 
-    icon: FolderKanban, 
+  {
+    title: 'Services Page',
+    description: 'Manage the standalone services pages content and options.',
+    icon: FolderKanban,
     path: '/admin/cms/services',
     tag: 'Core'
   },
-  { 
-    title: 'Service Details', 
-    description: 'Manage standalone, dynamic service pages (inside pages).', 
-    icon: FolderKanban, 
+  {
+    title: 'Service Details',
+    description: 'Manage standalone, dynamic service pages (inside pages).',
+    icon: FolderKanban,
     path: '/admin/cms/service-details',
     tag: 'Core'
   },
-  { 
-    title: 'Projects', 
-    description: 'Upload project gallery photos and detail pages.', 
-    icon: FolderKanban, 
+  {
+    title: 'Projects',
+    description: 'Upload project gallery photos and detail pages.',
+    icon: FolderKanban,
     path: '/admin/cms/projects',
     tag: 'Gallery'
   },
-  { 
-    title: 'Careers', 
-    description: 'Post job openings and manage job descriptions.', 
-    icon: FileText, 
+  {
+    title: 'Careers',
+    description: 'Post job openings and manage job descriptions.',
+    icon: FileText,
     path: '/admin/cms/careers',
     tag: 'HR'
   },
-  { 
-    title: 'Blog', 
-    description: 'Write and publish insights, resources, and articles.', 
-    icon: FileText, 
+  {
+    title: 'Blog',
+    description: 'Write and publish insights, resources, and articles.',
+    icon: FileText,
     path: '/admin/cms/blog',
     tag: 'Content'
   },
-  { 
-    title: 'Resources', 
-    description: 'Manage educational materials and helpful resources.', 
-    icon: BookOpen, 
+  {
+    title: 'Resources',
+    description: 'Manage educational materials and helpful resources.',
+    icon: BookOpen,
     path: '/admin/cms/resources',
     tag: 'Resources'
   },
-  { 
-    title: 'Global Settings', 
-    description: 'Update footer links, contact info, and social media.', 
-    icon: Share2, 
+  {
+    title: 'Global Settings',
+    description: 'Update footer links, contact info, and social media.',
+    icon: Share2,
     path: '/admin/cms/settings',
     tag: 'Settings'
   },
@@ -112,12 +112,12 @@ export const CmsIndexView: React.FC = () => {
         {cmsCards.map((card, i) => {
           const tagColor = tagColors[card.tag] || '#64748B';
           return (
-            <div 
-              key={i} 
+            <div
+              key={i}
               onClick={() => navigate(card.path)}
-              style={{ 
-                backgroundColor: theme.colors.adminSurface, 
-                borderRadius: '14px', 
+              style={{
+                backgroundColor: theme.colors.adminSurface,
+                borderRadius: '14px',
                 padding: '22px',
                 border: `1px solid ${theme.colors.adminBorder}`,
                 cursor: 'pointer',
@@ -142,16 +142,16 @@ export const CmsIndexView: React.FC = () => {
             >
               {/* Top row: icon + tag */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div style={{ 
-                  width: '44px', height: '44px', 
+                <div style={{
+                  width: '44px', height: '44px',
                   backgroundColor: theme.colors.adminAccentBg,
-                  borderRadius: '10px', 
-                  display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                  borderRadius: '10px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
                   <card.icon size={22} color={theme.colors.adminAccent} />
                 </div>
-                <span style={{ 
-                  fontSize: '11px', fontWeight: 600, 
+                <span style={{
+                  fontSize: '11px', fontWeight: 600,
                   color: tagColor,
                   backgroundColor: `${tagColor}12`,
                   padding: '3px 8px', borderRadius: '20px',
@@ -172,7 +172,7 @@ export const CmsIndexView: React.FC = () => {
               </div>
 
               {/* Footer */}
-              <div style={{ 
+              <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                 paddingTop: '14px',
                 borderTop: `1px solid ${theme.colors.adminBorder}`,

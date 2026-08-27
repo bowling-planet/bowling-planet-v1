@@ -41,6 +41,7 @@ import leadRoutes from './routes/lead.routes';
 import landingPageRoutes from './routes/landingPage.routes';
 import serviceDetailRoutes from './routes/serviceDetail.routes';
 import { apiSecretMiddleware } from './middleware/apiSecretMiddleware';
+import aboutPageRoutes from './routes/about.routes'
 
 import seoRoutes from './routes/seo.routes';
 
@@ -149,13 +150,14 @@ app.use(async (_req: Request, res: Response, next: NextFunction) => {
 // ------------------------------------------------------------------
 app.use(apiSecretMiddleware);
 
-app.use("/project",projectRoutes);
-app.use('/base-products',baseProductRoutes);
-app.use('/product-items',productItemRoutes);
-app.use('/career',careerRoutes);
-app.use('/team',teamRoutes);
-app.use('/blog',blogRoutes);
-app.use('/resource',resourceRoutes);
+app.use("/project", projectRoutes);
+app.use('/base-products', baseProductRoutes);
+app.use('/product-items', productItemRoutes);
+app.use('/career', careerRoutes);
+app.use('/team', teamRoutes);
+app.use('/about-page', aboutPageRoutes);
+app.use('/blog', blogRoutes);
+app.use('/resource', resourceRoutes);
 app.use('/auth', authRoutes);
 app.use('/cloudinary', cloudinaryRoutes);
 app.use('/homepage', homePageRoutes);
@@ -164,7 +166,7 @@ app.use('/franchise-page', franchisePageRoutes);
 app.use('/services-page', servicesPageRoutes);
 app.use('/service-details', serviceDetailRoutes);
 app.use('/leads', leadRoutes);
-app.use('/landing',landingPageRoutes);
+app.use('/landing', landingPageRoutes);
 // ------------------------------------------------------------------
 // 8. 404 HANDLER — catches any request that didn't match a route.
 //    Must come AFTER all app.use() route registrations.
@@ -235,4 +237,4 @@ if (process.env.NODE_ENV !== "production" && process.env.VERCEL !== "1") {
 }
 
 export default app;
- 
+
