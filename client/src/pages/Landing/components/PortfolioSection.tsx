@@ -515,8 +515,6 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
   const filtered =
     activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter)
 
-  console.log(filtered)
-
   // Keep selection valid when filter changes
   useEffect(() => {
     if (!filtered.length) {
@@ -584,8 +582,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                 type="button"
                 onClick={() => setActiveFilter(cat)}
                 className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${isActive
-                    ? 'border-[#5FC1D1] bg-[#5FC1D1]/15 text-[#5FC1D1]'
-                    : 'border-white/15 bg-[#111118] text-[#A1A1A6] hover:border-[#5FC1D1]/40 hover:text-[#F5F5F7]'
+                  ? 'border-[#5FC1D1] bg-[#5FC1D1]/15 text-[#5FC1D1]'
+                  : 'border-white/15 bg-[#111118] text-[#A1A1A6] hover:border-[#5FC1D1]/40 hover:text-[#F5F5F7]'
                   }`}
               >
                 {cat}
@@ -714,8 +712,8 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                         <ArrowUpRight
                           size={16}
                           className={`shrink-0 transition-all duration-300 ${isActive
-                              ? 'text-[#5FC1D1] translate-x-0 opacity-100'
-                              : 'translate-x-1 text-white/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
+                            ? 'text-[#5FC1D1] translate-x-0 opacity-100'
+                            : 'translate-x-1 text-white/30 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
                             }`}
                         />
                         {isActive && (

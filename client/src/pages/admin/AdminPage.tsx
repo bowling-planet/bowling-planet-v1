@@ -15,7 +15,6 @@ import { LeadDetailView } from './views/leads/LeadDetailView';
 import { CmsAnalyticsView } from './views/analytics/CmsAnalyticsView';
 import { ProfileView } from './views/profile/ProfileView';
 import { ProductItemsView } from './views/cms/products/components/ProductItemsView';
-import { CmsTeamView } from './views/cms/team/CmsTeamView';
 import { CmsResourceView } from './views/cms/resources/CmsResourceView';
 import { BlogEditorPage } from './views/cms/blog/components/BlogEditorPage';
 import { MediaManagement } from './views/media/MediaManagement';
