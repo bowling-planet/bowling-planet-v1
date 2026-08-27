@@ -3,6 +3,9 @@ import { apiClient } from './apiClient';
 export interface HomePageData {
   _id?: string;
   hero: {
+    eyebrow: string;
+    headingPrefix: string;
+    subheadline: string;
     rotatingActivities: string[];
   };
   stats: {
@@ -29,8 +32,13 @@ export interface HomePageData {
   }[];
   services?: {
     _id?: string;
+    step: string;
+    eyebrow: string;
     title: string;
     subtitle: string;
+    bullets: string[];
+    color: string;
+    rgb: string;
     image?: { url: string; public_id: string };
   }[];
   caseStudies?: {
@@ -42,6 +50,7 @@ export interface HomePageData {
     metric: string;
     image?: { url: string; public_id: string };
   }[];
+  equipmentTags?: string[];
 }
 
 export const homePageApi = {
@@ -62,6 +71,7 @@ export const homePageApi = {
     if (data.trustedBrands) formData.append('trustedBrands', JSON.stringify(data.trustedBrands));
     if (data.featuredProjects) formData.append('featuredProjects', JSON.stringify(data.featuredProjects));
     if (data.productCategories) formData.append('productCategories', JSON.stringify(data.productCategories));
+    if (data.equipmentTags) formData.append('equipmentTags', JSON.stringify(data.equipmentTags));
     
     // Arrays for which we might have files
     if (data.services) formData.append('services', JSON.stringify(data.services));

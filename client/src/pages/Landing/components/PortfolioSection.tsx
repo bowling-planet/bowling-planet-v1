@@ -359,12 +359,12 @@
 import { type FC, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, ArrowUpRight, MapPin } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useLeadTracker } from '../../../context/LeadTrackerContext'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { getAllProjects, type IProjectSummary } from '../services'
 
-const CATEGORIES = ['All', 'Bowling', 'Softplay', 'Arcade', 'VR'] as const
+
 
 const LOCAL_IMAGES = [
   '/products/Bowling_Lane_Dubai.avif',
@@ -382,29 +382,18 @@ const BROKEN_URL_SNIPPETS = [
   'photo-1628102491629-778571d893a3',
 ]
 
-// Fallback locations only — IProjectSummary has no `location` field in the schema yet.
-const FALLBACK_LOCATIONS = ['Dubai', 'Delhi', 'Ahmedabad', 'Calicut', 'Mumbai', 'Surat']
 
-type Category = (typeof CATEGORIES)[number]
 
 type ProjectCardData = {
   id: string
   slug?: string
   name: string
   image: string
-  location: string
-  category: Category
+  year: string
   description?: string
 }
 
-const categoryFromTags = (tags?: string[], fallback: Category = 'Bowling'): Category => {
-  const joined = (tags || []).join(' ').toLowerCase()
-  if (joined.includes('soft') || joined.includes('kids')) return 'Softplay'
-  if (joined.includes('arcade') || joined.includes('redemption')) return 'Arcade'
-  if (joined.includes('vr') || joined.includes('immersive')) return 'VR'
-  if (joined.includes('bowl') || joined.includes('duckpin') || joined.includes('lane')) return 'Bowling'
-  return fallback
-}
+
 
 const resolveImage = (url: string | undefined, index: number): string => {
   if (!url || !url.trim()) return LOCAL_IMAGES[index % LOCAL_IMAGES.length]
@@ -422,8 +411,7 @@ const mapProjectToCard = (p: IProjectSummary, i: number): ProjectCardData => ({
   slug: p.slug,
   name: p.title,
   image: resolveImage(p.media?.[0]?.url, i),
-  location: FALLBACK_LOCATIONS[i % FALLBACK_LOCATIONS.length],
-  category: categoryFromTags(p.tags, (['Bowling', 'Softplay', 'Arcade', 'VR'] as Category[])[i % 4]),
+  year: p.createdAt ? new Date(p.createdAt).getFullYear().toString() : new Date().getFullYear().toString(),
   description: p.description,
 })
 
@@ -456,7 +444,6 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
   const { logCTAEvent } = useLeadTracker()
   const navigate = useNavigate()
   const reduced = useReducedMotion()
-  const [activeFilter, setActiveFilter] = useState<Category>('All')
   const [activeId, setActiveId] = useState<string>('')
   const [paused, setPaused] = useState(false)
 
@@ -501,19 +488,14 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
         slug: p.slug,
         name: p.title || p.name || 'Untitled project',
         image: resolveImage(p.media?.[0]?.url || p.image, i),
-        location: p.location || p.city || FALLBACK_LOCATIONS[i % FALLBACK_LOCATIONS.length],
-        category: categoryFromTags(
-          p.tags,
-          (['Bowling', 'Softplay', 'Arcade', 'VR'] as Category[])[i % 4],
-        ),
+        year: p.createdAt ? new Date(p.createdAt).getFullYear().toString() : new Date().getFullYear().toString(),
         description: p.description,
       })) as ProjectCardData[]
     }
     return fetchedProjects
   }, [data, fetchedProjects])
 
-  const filtered =
-    activeFilter === 'All' ? projects : projects.filter((p) => p.category === activeFilter)
+  const filtered = projects
 
   // Keep selection valid when filter changes
   useEffect(() => {
@@ -570,27 +552,6 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
           </Link>
         </div>
 
-        <div
-          className="mb-5 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          aria-label="Filter projects"
-        >
-          {CATEGORIES.map((cat) => {
-            const isActive = activeFilter === cat
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveFilter(cat)}
-                className={`shrink-0 cursor-pointer rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors ${isActive
-                  ? 'border-[#5FC1D1] bg-[#5FC1D1]/15 text-[#5FC1D1]'
-                  : 'border-white/15 bg-[#111118] text-[#A1A1A6] hover:border-[#5FC1D1]/40 hover:text-[#F5F5F7]'
-                  }`}
-              >
-                {cat}
-              </button>
-            )
-          })}
-        </div>
 
         {isLoading ? (
           <p className="py-10 text-center text-sm text-[#86868B]">Loading projects…</p>
@@ -617,15 +578,7 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
 
                   <div className="absolute inset-x-0 bottom-0 p-5 flex flex-col justify-end">
-                    <div className="mb-3 flex flex-wrap gap-2">
-                      <span className="rounded-full border border-[#5FC1D1]/40 bg-[#5FC1D1]/15 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#5FC1D1] backdrop-blur-md">
-                        {project.category}
-                      </span>
-                      <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[10px] font-medium text-[#E8E8ED] backdrop-blur-md">
-                        <MapPin size={10} />
-                        {project.location}
-                      </span>
-                    </div>
+
                     <h3 className="font-display mb-2 text-2xl font-bold leading-tight text-[#F5F5F7]">
                       {project.name}
                     </h3>
@@ -694,9 +647,7 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                             <span className="font-[family-name:var(--font-data)] text-[11px] font-bold tracking-wider text-[#5FC1D1]/80">
                               {String(i + 1).padStart(2, '0')}
                             </span>
-                            <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#A1A1A6]">
-                              {project.category}
-                            </span>
+
                           </div>
                           <h3
                             className={`truncate text-[15px] font-bold leading-snug transition-colors ${isActive ? 'text-[#5FC1D1]' : 'text-[#F5F5F7] group-hover:text-[#5FC1D1]'
@@ -704,10 +655,6 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                           >
                             {project.name}
                           </h3>
-                          <p className="mt-0.5 flex items-center gap-1 text-xs text-[#86868B]">
-                            <MapPin size={11} />
-                            {project.location}
-                          </p>
                         </div>
                         <ArrowUpRight
                           size={16}
@@ -746,15 +693,7 @@ const PortfolioSection: FC<{ data?: { projectIds: any[] } }> = ({ data }) => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
                     <div className="absolute inset-x-0 bottom-0 p-7">
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        <span className="rounded-full border border-[#5FC1D1]/40 bg-[#5FC1D1]/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#5FC1D1]">
-                          {active.category}
-                        </span>
-                        <span className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[11px] font-medium text-[#E8E8ED] backdrop-blur-sm">
-                          <MapPin size={11} />
-                          {active.location}
-                        </span>
-                      </div>
+
                       <h3 className="font-display mb-2 text-[clamp(1.35rem,2.5vw,2rem)] font-bold leading-tight text-[#F5F5F7]">
                         {active.name}
                       </h3>

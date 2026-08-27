@@ -82,8 +82,13 @@ const PILLARS: Pillar[] = [
 
 interface ServicesSectionProps {
   data?: {
+    step?: string;
+    eyebrow?: string;
     title: string;
     subtitle: string;
+    bullets?: string[];
+    color?: string;
+    rgb?: string;
     image?: { url: string; public_id: string };
   }[];
 }
@@ -101,8 +106,13 @@ const ServicesSection: FC<ServicesSectionProps> = ({ data }) => {
     if (!cmsItem) return p;
     return {
       ...p,
+      step: cmsItem.step || p.step,
+      eyebrow: cmsItem.eyebrow || p.eyebrow,
       title: cmsItem.title || p.title,
       desc: cmsItem.subtitle || p.desc,
+      bullets: cmsItem.bullets && cmsItem.bullets.length > 0 ? cmsItem.bullets : p.bullets,
+      color: cmsItem.color || p.color,
+      rgb: cmsItem.rgb || p.rgb,
       image: cmsItem.image?.url || p.image,
     };
   });

@@ -86,7 +86,12 @@ const deleteBtn: React.CSSProperties = {
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const emptyData: HomePageData = {
-  hero: { rotatingActivities: [] },
+  hero: { 
+    eyebrow: '',
+    headingPrefix: '',
+    subheadline: '',
+    rotatingActivities: [] 
+  },
   stats: { yearsOfExperience: '', productsAndEquip: '', projectsDelivered: '', citiesServed: '' },
   trustedBrands: [],
   featuredProjects: { projectIds: [] },
@@ -218,14 +223,18 @@ export const CmsHomeView: React.FC = () => {
   };
 
   // ── Edit data handlers ───────────────────────────────────────────────────
+  const setHeroField = (field: keyof typeof editData.hero, value: any) => {
+    setEditData(p => ({ ...p, hero: { ...p.hero, [field]: value } }));
+  };
+
   const setActivity = (i: number, v: string) => {
     const a = [...editData.hero.rotatingActivities]; a[i] = v;
-    setEditData(p => ({ ...p, hero: { rotatingActivities: a } }));
+    setEditData(p => ({ ...p, hero: { ...p.hero, rotatingActivities: a } }));
   };
   const removeActivity = (i: number) =>
-    setEditData(p => ({ ...p, hero: { rotatingActivities: p.hero.rotatingActivities.filter((_, x) => x !== i) } }));
+    setEditData(p => ({ ...p, hero: { ...p.hero, rotatingActivities: p.hero.rotatingActivities.filter((_, x) => x !== i) } }));
   const addActivity = () =>
-    setEditData(p => ({ ...p, hero: { rotatingActivities: [...p.hero.rotatingActivities, ''] } }));
+    setEditData(p => ({ ...p, hero: { ...p.hero, rotatingActivities: [...p.hero.rotatingActivities, ''] } }));
 
   const setBrandName = (i: number, v: string) => {
     const b = [...editData.trustedBrands]; 
@@ -245,6 +254,16 @@ export const CmsHomeView: React.FC = () => {
 
   const setStat = (k: keyof HomePageData['stats'], v: string) =>
     setEditData(p => ({ ...p, stats: { ...p.stats, [k]: v } }));
+
+  // --- Equipment Tags Handlers ---
+  const setEquipmentTag = (i: number, v: string) => {
+    const t = [...(editData.equipmentTags || [])]; t[i] = v;
+    setEditData(p => ({ ...p, equipmentTags: t }));
+  };
+  const removeEquipmentTag = (i: number) =>
+    setEditData(p => ({ ...p, equipmentTags: (p.equipmentTags || []).filter((_, x) => x !== i) }));
+  const addEquipmentTag = () =>
+    setEditData(p => ({ ...p, equipmentTags: [...(p.equipmentTags || []), ''] }));
 
   // --- Product Categories Handlers ---
   const addProductCategory = () => setEditData(p => ({ ...p, productCategories: [...(p.productCategories || []), { title: '', desc: '', icon: '', count: '', color: '#000000' }] }));
@@ -272,13 +291,32 @@ export const CmsHomeView: React.FC = () => {
   };
 
   // --- Services Handlers ---
-  const addService = () => setEditData(p => ({ ...p, services: [...(p.services || []), { title: '', subtitle: '' }] }));
+  const addService = () => setEditData(p => ({ ...p, services: [...(p.services || []), { step: '', eyebrow: '', title: '', subtitle: '', bullets: [], color: '#000000', rgb: '0,0,0' }] }));
   const removeService = (i: number) => {
     setEditData(p => ({ ...p, services: (p.services || []).filter((_, x) => x !== i) }));
     const newFiles = { ...servicesFiles }; delete newFiles[i]; setServicesFiles(newFiles);
   };
-  const setServiceField = (i: number, field: 'title' | 'subtitle', val: string) => {
+  const setServiceField = (i: number, field: 'step' | 'eyebrow' | 'title' | 'subtitle' | 'color' | 'rgb', val: string) => {
     const arr = [...(editData.services || [])]; arr[i] = { ...arr[i], [field]: val };
+    setEditData(p => ({ ...p, services: arr }));
+  };
+  const setServiceBullet = (svcIdx: number, bulletIdx: number, val: string) => {
+    const arr = [...(editData.services || [])];
+    const bullets = [...(arr[svcIdx].bullets || [])];
+    bullets[bulletIdx] = val;
+    arr[svcIdx] = { ...arr[svcIdx], bullets };
+    setEditData(p => ({ ...p, services: arr }));
+  };
+  const addServiceBullet = (svcIdx: number) => {
+    const arr = [...(editData.services || [])];
+    const bullets = [...(arr[svcIdx].bullets || []), ''];
+    arr[svcIdx] = { ...arr[svcIdx], bullets };
+    setEditData(p => ({ ...p, services: arr }));
+  };
+  const removeServiceBullet = (svcIdx: number, bulletIdx: number) => {
+    const arr = [...(editData.services || [])];
+    const bullets = (arr[svcIdx].bullets || []).filter((_, i) => i !== bulletIdx);
+    arr[svcIdx] = { ...arr[svcIdx], bullets };
     setEditData(p => ({ ...p, services: arr }));
   };
   const handleServiceFile = (i: number, file: File | null) => {
@@ -417,41 +455,76 @@ export const CmsHomeView: React.FC = () => {
         </div>
       )}
 
-      {/* ─────────────── SECTION 1 — HERO ACTIVITIES ─────────────── */}
+      {/* ─────────────── SECTION 1 — HERO SECTION ─────────────── */}
       <div style={card}>
         <SectionHeader
           icon={<Activity size={20} color={theme.colors.prussianBlue} />}
-          title="Hero Activities"
-          subtitle="Rotating words in the main headline — e.g. 'Bowling Lanes', 'VR Gaming'."
+          title="Hero Section"
+          subtitle="Configure the main hero text, calls to action, and rotating activities."
         />
         {!isEditing ? (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-            {d.hero.rotatingActivities.length === 0
-              ? <p style={{ color: theme.colors.adminTextMuted, fontSize: 14 }}>No activities configured yet.</p>
-              : d.hero.rotatingActivities.map((a, i) => (
-                <span key={i} style={tagChip}>{a}</span>
-              ))
-            }
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: theme.colors.adminTextMuted, textTransform: 'uppercase', marginBottom: 4 }}>Eyebrow</div>
+              <div style={{ fontSize: 14, color: theme.colors.adminText }}>{d.hero.eyebrow || '—'}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: theme.colors.adminTextMuted, textTransform: 'uppercase', marginBottom: 4 }}>Heading Prefix</div>
+              <div style={{ fontSize: 14, color: theme.colors.adminText }}>{d.hero.headingPrefix || '—'}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: theme.colors.adminTextMuted, textTransform: 'uppercase', marginBottom: 4 }}>Subheadline</div>
+              <div style={{ fontSize: 14, color: theme.colors.adminText, whiteSpace: 'pre-wrap' }}>{d.hero.subheadline || '—'}</div>
+            </div>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, color: theme.colors.adminTextMuted, textTransform: 'uppercase', marginBottom: 8 }}>Rotating Activities</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                {d.hero.rotatingActivities?.length === 0
+                  ? <p style={{ color: theme.colors.adminTextMuted, fontSize: 14, margin: 0 }}>No activities configured.</p>
+                  : d.hero.rotatingActivities?.map((a, i) => (
+                    <span key={i} style={tagChip}>{a}</span>
+                  ))
+                }
+              </div>
+            </div>
           </div>
         ) : (
-          <>
-            {editData.hero.rotatingActivities.map((a, i) => (
-              <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-                <input
-                  style={input}
-                  value={a}
-                  onChange={e => setActivity(i, e.target.value)}
-                  placeholder="e.g. Trampoline Parks"
-                />
-                <button onClick={() => removeActivity(i)} style={deleteBtn}>
-                  <Trash2 size={16} />
-                </button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Eyebrow</label>
+                <input style={input} value={editData.hero.eyebrow} onChange={e => setHeroField('eyebrow', e.target.value)} placeholder="e.g. India's Premier FEC Authority" />
               </div>
-            ))}
-            <button onClick={addActivity} style={addRowBtn}>
-              <Plus size={16} /> Add Activity
-            </button>
-          </>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Heading Prefix</label>
+                <input style={input} value={editData.hero.headingPrefix} onChange={e => setHeroField('headingPrefix', e.target.value)} placeholder="e.g. Consulting & Setup For" />
+              </div>
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Subheadline</label>
+              <p style={{ fontSize: 11, color: theme.colors.adminTextMuted, marginTop: -4, marginBottom: 8 }}>Tip: Wrap text in **asterisks** to make it highlighted (orange).</p>
+              <textarea style={{ ...input, minHeight: 80, resize: 'vertical' }} value={editData.hero.subheadline} onChange={e => setHeroField('subheadline', e.target.value)} placeholder="Enter the subheadline..." />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Rotating Activities</label>
+              {editData.hero.rotatingActivities?.map((a, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                  <input
+                    style={input}
+                    value={a}
+                    onChange={e => setActivity(i, e.target.value)}
+                    placeholder="e.g. Trampoline Parks"
+                  />
+                  <button onClick={() => removeActivity(i)} style={deleteBtn}>
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+              <button onClick={addActivity} style={{ ...addRowBtn, width: 'fit-content' }}>
+                <Plus size={16} /> Add Activity
+              </button>
+            </div>
+          </div>
         )}
       </div>
 
@@ -545,8 +618,45 @@ export const CmsHomeView: React.FC = () => {
           </div>
         )}
       </div>
+      {/* ─────────────── SECTION 4 — EQUIPMENT TAGS ─────────────── */}
+      <div style={card}>
+        <SectionHeader
+          icon={<Layers size={20} color={theme.colors.prussianBlue} />}
+          title="Equipment Tags"
+          subtitle="Configure the 'Equipment Types We Cover' tags shown in the Distribution section."
+        />
+        {!isEditing ? (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {d.equipmentTags?.length === 0
+              ? <p style={{ color: theme.colors.adminTextMuted, fontSize: 14 }}>No equipment tags configured.</p>
+              : d.equipmentTags?.map((t, i) => (
+                <span key={i} style={tagChip}>{t}</span>
+              ))
+            }
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {editData.equipmentTags?.map((t, i) => (
+              <div key={i} style={{ display: 'flex', gap: 8 }}>
+                <input
+                  style={input}
+                  value={t}
+                  onChange={e => setEquipmentTag(i, e.target.value)}
+                  placeholder="e.g. Laser Tag"
+                />
+                <button onClick={() => removeEquipmentTag(i)} style={deleteBtn}>
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))}
+            <button onClick={addEquipmentTag} style={{ ...addRowBtn, width: 'fit-content' }}>
+              <Plus size={16} /> Add Equipment Tag
+            </button>
+          </div>
+        )}
+      </div>
 
-      {/* ─────────────── SECTION 4 — FEATURED PROJECTS ─────────────── */}
+      {/* ─────────────── SECTION 5 — FEATURED PROJECTS ─────────────── */}
       <div style={card}>
         <SectionHeader
           icon={<Target size={20} color={theme.colors.prussianBlue} />}
@@ -714,9 +824,18 @@ export const CmsHomeView: React.FC = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
             {d.services?.length === 0 && <p style={{ color: theme.colors.adminTextMuted, fontSize: 14 }}>No services added.</p>}
             {d.services?.map((svc, i) => (
-              <div key={i} style={{ border: `1px solid ${theme.colors.adminBorder}`, borderRadius: 12, padding: 16 }}>
+              <div key={i} style={{ border: `1px solid ${theme.colors.adminBorder}`, borderRadius: 12, padding: 16, borderTop: `4px solid ${svc.color || '#5FC1D1'}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: svc.color || '#5FC1D1' }}>{svc.step}</span>
+                  <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', color: theme.colors.adminTextMuted }}>{svc.eyebrow}</span>
+                </div>
                 <div style={{ fontWeight: 600, fontSize: 16, marginBottom: 4, color: theme.colors.adminText }}>{svc.title || 'Untitled'}</div>
                 <div style={{ fontSize: 13, color: theme.colors.adminTextMuted, marginBottom: 12 }}>{svc.subtitle}</div>
+                {svc.bullets && svc.bullets.length > 0 && (
+                  <ul style={{ margin: '0 0 12px 0', paddingLeft: 16, fontSize: 12, color: theme.colors.adminTextMuted }}>
+                    {svc.bullets.map((b, bi) => <li key={bi}>{b}</li>)}
+                  </ul>
+                )}
                 {svc.image?.url ? <img src={svc.image.url} alt="Service" style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 8 }} /> : <div style={{ width: '100%', height: 120, backgroundColor: '#f1f5f9', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, color: theme.colors.adminTextLight }}>No image</div>}
               </div>
             ))}
@@ -728,13 +847,45 @@ export const CmsHomeView: React.FC = () => {
                 <button onClick={() => removeService(i)} style={{ position: 'absolute', top: 12, right: 12, background: 'none', border: 'none', color: theme.colors.adminDanger, cursor: 'pointer' }}><Trash2 size={16} /></button>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Step (e.g. 01)</label>
+                    <input style={input} value={svc.step} onChange={e => setServiceField(i, 'step', e.target.value)} placeholder="01" />
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Eyebrow (e.g. Phase One)</label>
+                    <input style={input} value={svc.eyebrow} onChange={e => setServiceField(i, 'eyebrow', e.target.value)} placeholder="Phase One" />
+                  </div>
+                  <div>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Title</label>
                     <input style={input} value={svc.title} onChange={e => setServiceField(i, 'title', e.target.value)} placeholder="e.g. Pre-Opening Consulting" />
                   </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Theme Color (Hex)</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <input type="color" value={svc.color || '#5FC1D1'} onChange={e => setServiceField(i, 'color', e.target.value)} style={{ width: 40, height: 40, padding: 0, border: 'none', borderRadius: 8, cursor: 'pointer' }} />
+                      <input style={{ ...input, flex: 1 }} value={svc.color} onChange={e => setServiceField(i, 'color', e.target.value)} placeholder="#5FC1D1" />
+                    </div>
+                  </div>
+                  <div>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>RGB (e.g. 95,193,209)</label>
+                    <input style={input} value={svc.rgb} onChange={e => setServiceField(i, 'rgb', e.target.value)} placeholder="95,193,209" />
+                  </div>
                   <div style={{ gridColumn: '1 / -1' }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Subtitle / Description</label>
-                    <input style={input} value={svc.subtitle} onChange={e => setServiceField(i, 'subtitle', e.target.value)} placeholder="Description..." />
+                    <textarea style={{ ...input, minHeight: 80, resize: 'vertical' }} value={svc.subtitle} onChange={e => setServiceField(i, 'subtitle', e.target.value)} placeholder="Description..." />
                   </div>
+                  
+                  {/* Bullets */}
+                  <div style={{ gridColumn: '1 / -1' }}>
+                    <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Bullets / Includes</label>
+                    {(svc.bullets || []).map((b, bi) => (
+                      <div key={bi} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                        <input style={input} value={b} onChange={e => setServiceBullet(i, bi, e.target.value)} placeholder="Bullet point..." />
+                        <button onClick={() => removeServiceBullet(i, bi)} style={deleteBtn}><Trash2 size={16} /></button>
+                      </div>
+                    ))}
+                    <button onClick={() => addServiceBullet(i)} style={{ ...addRowBtn, width: 'fit-content', padding: '6px 12px', fontSize: 12, marginTop: 4 }}><Plus size={14} /> Add Bullet</button>
+                  </div>
+
                   <div style={{ gridColumn: '1 / -1' }}>
                     <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 6, color: theme.colors.adminText }}>Image</label>
                     {servicesFiles[i] ? <div style={{ fontSize: 13, color: theme.colors.prussianBlue }}>{servicesFiles[i].name} <button onClick={() => handleServiceFile(i, null)} style={{ border: 'none', background: 'none', color: theme.colors.adminDanger, cursor: 'pointer', marginLeft: 8 }}>Remove</button></div> : svc.image?.url ? <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}><img src={svc.image.url} alt="" style={{ width: 60, height: 40, objectFit: 'cover', borderRadius: 4 }} /><input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleServiceFile(i, e.target.files[0])} style={{ fontSize: 13 }} /></div> : <input type="file" accept="image/*" onChange={e => e.target.files?.[0] && handleServiceFile(i, e.target.files[0])} style={{ fontSize: 13 }} />}

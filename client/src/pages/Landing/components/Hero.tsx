@@ -5,8 +5,7 @@
 
 import { type FC, useEffect, useRef, useState } from 'react'
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
-import { useLeadTracker } from '../../../context/LeadTrackerContext'
+
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { ChevronDown } from 'lucide-react'
 
@@ -106,11 +105,27 @@ const MagneticButton: FC<{
     </motion.button>
   )
 }
+// @ts-ignore - MagneticButton is preserved for future use
+const _MagneticButton = MagneticButton;
 
 /* ── Hero ─────────────────────────────────────────────────────── */
-const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
-  const navigate = useNavigate()
-  const { logCTAEvent } = useLeadTracker()
+const parseHighlights = (text: string) => {
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <span key={i} style={{ color: '#FFAA33', fontWeight: 600 }}>
+          {part.slice(2, -2)}
+        </span>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+};
+
+const Hero: FC<{ data?: any, services?: any[] }> = ({ data, services }) => {
+  // const navigate = useNavigate()
+  // const { logCTAEvent } = useLeadTracker()
   const reduced = useReducedMotion()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -269,7 +284,7 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
                 textShadow: '0 0 12px rgba(95,193,209,0.8)',
                 whiteSpace: 'nowrap'
               }}>
-                India's Premier FEC Authority
+                {data?.eyebrow || "India's Premier FEC Authority"}
               </span>
             </div>
           </motion.div>
@@ -288,7 +303,7 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
               marginBottom: 0,
             }}
           >
-            <span style={{ display: 'block', fontSize: '0.85em', marginBottom: 8, color: '#F5F5F7', letterSpacing: '-0.01em' }}>Consulting & Setup For</span>
+            <span style={{ display: 'block', fontSize: '0.85em', marginBottom: 8, color: '#F5F5F7', letterSpacing: '-0.01em' }}>{data?.headingPrefix || "Consulting & Setup For"}</span>
             <span style={{
               display: 'flex',
               height: 'clamp(2rem, 4.2vw, 3.8rem)',
@@ -316,12 +331,7 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
               fontWeight: 400,
             }}
           >
-            Turn your space into a{' '}
-            <span style={{ color: '#FFAA33', fontWeight: 600 }}>
-              "thriving entertainment business"
-            </span>. We provide end-to-end setup, equipment, and operations backed by{' '}
-            <span style={{ color: '#FFAA33', fontWeight: 600 }}>17+ years</span> and{' '}
-            <span style={{ color: '#FFAA33', fontWeight: 600 }}>50+ venues</span> across India.
+            {parseHighlights(data?.subheadline || "Turn your space into a **\"thriving entertainment business\"**. We provide end-to-end setup, equipment, and operations backed by **17+ years** and **50+ venues** across India.")}
           </motion.p>
 
           {/* Activity chips row */}
@@ -334,7 +344,7 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
               marginBottom: 44, maxWidth: 500
             }}
           >
-            {activeActivities.slice(0, 6).map(a => (
+            {activeActivities.slice(0, 6).map((a: string) => (
               <div key={a} style={{
                 padding: '6px 14px',
                 borderRadius: 100,
@@ -361,32 +371,7 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
             </div>
           </motion.div>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-cta-row"
-            style={{ display: 'flex', gap: 12, justifyContent: 'flex-start', flexWrap: 'wrap', width: '100%' }}
-          >
-            <MagneticButton
-              className="btn btn-primary hero-cta-btn"
-              onClick={() => { logCTAEvent('Hero: Get Free Consultation'); navigate('/contact') }}
-              aria-label="Get a free FEC consultation"
-              style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', padding: 'clamp(12px,1.5vw,15px) clamp(20px,2.5vw,32px)', flex: '1 1 auto', maxWidth: 280, textAlign: 'center', justifyContent: 'center' }}
-            >
-              Get Free Consultation
-            </MagneticButton>
 
-            <MagneticButton
-              className="btn btn-ghost hero-cta-btn"
-              onClick={() => { logCTAEvent('Hero: Explore Our Work'); document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' }) }}
-              aria-label="View our completed projects"
-              style={{ fontSize: 'clamp(13px, 1.2vw, 15px)', padding: 'clamp(11px,1.4vw,14px) clamp(20px,2.5vw,32px)', flex: '1 1 auto', maxWidth: 280, textAlign: 'center', justifyContent: 'center' }}
-            >
-              Explore Our Work →
-            </MagneticButton>
-          </motion.div>
 
           {/* Certification Logos */}
           <motion.div
@@ -507,11 +492,11 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
               {/* Vertical timeline line */}
               <div style={{ position: 'absolute', left: 15, top: 24, bottom: 24, width: 2, background: 'linear-gradient(to bottom, rgba(95,193,209,0.3) 0%, rgba(109,189,78,0.3) 50%, rgba(155,81,224,0.3) 100%)', zIndex: 0 }} />
 
-              {[
+              {(services?.length ? services.slice(0, 3) : [
                 { title: 'Pre-Opening Consulting', desc: 'Data-driven location analysis, ROI modeling, and 3D architectural design.', color: '#5FC1D1' },
                 { title: 'Operations Management', desc: 'Staff training, operational SOPs, and full facility management.', color: '#6DBD4E' },
                 { title: 'Equipment Supply', desc: 'Procurement of premium arcade games, bowling lanes, and global sourcing.', color: '#9B51E0' },
-              ].map((item, i) => (
+              ]).map((item, i) => (
                 <motion.div 
                   key={i} 
                   initial={{ opacity: 0, x: 20 }}
@@ -550,12 +535,13 @@ const Hero: FC<{ data?: { rotatingActivities: string[] } }> = ({ data }) => {
                         fontSize: 'clamp(12px, 1.2vw, 15px)', 
                         margin: 0, 
                         lineHeight: 1.6,
+                        maxWidth: '90%',
                         transition: 'color 0.3s ease'
                       }}
                       onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.9)'}
                       onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.5)'}
                     >
-                      {item.desc}
+                      {item.subtitle || item.desc}
                     </p>
                   </div>
                 </motion.div>

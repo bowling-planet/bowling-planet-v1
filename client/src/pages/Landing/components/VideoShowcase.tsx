@@ -23,25 +23,19 @@ const VideoShowcase: FC = () => {
         </motion.h2>
       </div>
 
-      {/* Responsive media frame — aspect-ratio avoids fixed vh blowouts on phones */}
-      <div className="relative mx-auto w-full max-w-[1600px] overflow-hidden bg-black">
-        <div className="relative aspect-[16/10] w-full sm:aspect-video md:aspect-[21/9] md:max-h-[70vh]">
-          <motion.video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2 }}
-            src="/showcase.mp4"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ filter: 'brightness(0.9) contrast(1.1)' }}
-          />
-
-
-        </div>
+      <div className="relative mx-auto w-full max-w-[1200px] bg-black px-4 sm:px-6">
+        <motion.video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          src="/showcase.mp4"
+          className="w-full max-h-[70vh] object-contain block mx-auto rounded-lg"
+        />
       </div>
     </section>
   )

@@ -5,20 +5,27 @@ import path from 'path';
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const ACTIVITIES = [
-  'Bowling Lanes',
-  'VR Gaming',
-  'Mini Golf',
-  'Trampoline Parks',
-  'Go-Kart Tracks',
-  'Cricket Simulators',
-  'Ziplines',
-  'Rope Courses',
-  'Soft Play Areas',
-  'Laser Tag',
-  'Bumper Cars',
-  'Rock Climbing',
-];
+const DEFAULT_HOME_PAGE = {
+  hero: {
+    eyebrow: "India's Premier FEC Authority",
+    headingPrefix: "Consulting & Setup For",
+    subheadline: "Turn your space into a **thriving entertainment business**. We provide end-to-end setup, equipment, and operations backed by **17+ years** and **50+ venues** across India.",
+    rotatingActivities: [
+      'Bowling Lanes',
+      'VR Gaming',
+      'Mini Golf',
+      'Trampoline Parks',
+      'Go-Kart Tracks',
+      'Cricket Simulators',
+      'Ziplines',
+      'Rope Courses',
+      'Soft Play Areas',
+      'Laser Tag',
+      'Bumper Cars',
+      'Rock Climbing',
+    ]
+  },
+};
 
 const DEFAULT_STATS = {
   yearsOfExperience: '17+',
@@ -64,20 +71,55 @@ const DEFAULT_CATEGORIES = [
 
 const DEFAULT_SERVICES = [
   {
-    title: 'Consulting & Design',
-    subtitle: 'Feasibility studies, master planning, and immersive FEC interior designs.',
+    step: '01',
+    eyebrow: 'Phase One',
+    title: 'Pre-Opening Consulting',
+    subtitle: 'We partner with you before a single brick is laid — running location analytics, modeling your ROI, designing the optimal floor layout, and building the team that will make your opening day unforgettable.',
+    bullets: [
+      'Location analytics & feasibility',
+      'ROI & financial modeling',
+      'Optimal layout & space planning',
+      'Game & equipment sourcing',
+      'Staffing structure & training',
+      'Agency & regulatory liaison',
+    ],
+    color: '#5FC1D1',
+    rgb: '95,193,209',
+    image: { url: '/products/Bowling_Lane_Dubai.avif', public_id: 'local' },
   },
   {
+    step: '02',
+    eyebrow: 'Phase Two',
+    title: 'Operations Management',
+    subtitle: 'Running a profitable FEC demands operational excellence every day. We design your SOPs, HR frameworks, finance structures, and data-driven marketing engines — then monitor KPIs continuously.',
+    bullets: [
+      'SOP & process documentation',
+      'HR frameworks & team structure',
+      'Finance & cost optimization',
+      'Marketing & digital execution',
+      'Safety systems & compliance',
+      'Real-time KPI monitoring',
+    ],
+    color: '#6DBD4E',
+    rgb: '109,189,78',
+    image: { url: '/products/Softplay_New_Delhi.avif', public_id: 'local' },
+  },
+  {
+    step: '03',
+    eyebrow: 'Distribution',
     title: 'Equipment Supply',
-    subtitle: 'Sourcing premium bowling lanes, VR setups, and arcade machines globally.',
-  },
-  {
-    title: 'Turnkey Execution',
-    subtitle: 'End-to-end installation, testing, and operational handover.',
-  },
-  {
-    title: 'After-Sales Support',
-    subtitle: '24/7 technical maintenance, spare parts, and staff training.',
+    subtitle: 'We source and distribute world-class FEC equipment globally — from a single arcade cabinet to a complete multi-zone entertainment destination, turnkey. ROI-modeled game selection included.',
+    bullets: [
+      'Bowling lanes & pinsetters',
+      'VR & immersive technology',
+      'Arcade & redemption games',
+      'Trampoline & soft play',
+      'Outdoor adventure equipment',
+      'Turnkey project management',
+    ],
+    color: '#FFAA33',
+    rgb: '255,170,51',
+    image: { url: '/products/Arcade_Games_Calicut.avif', public_id: 'local' },
   },
 ];
 
@@ -120,6 +162,12 @@ const DEFAULT_BRANDS = [
   { name: 'Essel World' }
 ];
 
+const DEFAULT_EQUIPMENT_TAGS = [
+  'Bowling Lanes', 'VR Gaming', 'Mini Golf', 'Trampoline Parks',
+  'Go-Kart Tracks', 'Cricket Simulators', 'Ziplines', 'Rope Courses',
+  'Soft Play Areas', 'Laser Tag', 'Bumper Cars', 'Rock Climbing'
+];
+
 const seedHome = async () => {
   try {
     const mongoUri = process.env.MONGO_URI;
@@ -129,12 +177,13 @@ const seedHome = async () => {
     console.log('Connected to MongoDB');
 
     const updateData = {
-      'hero.rotatingActivities': ACTIVITIES,
+      hero: DEFAULT_HOME_PAGE.hero,
       stats: DEFAULT_STATS,
       productCategories: DEFAULT_CATEGORIES,
       services: DEFAULT_SERVICES,
       caseStudies: DEFAULT_CASE_STUDIES,
       trustedBrands: DEFAULT_BRANDS,
+      equipmentTags: DEFAULT_EQUIPMENT_TAGS,
     };
 
     const updated = await HomePage.findOneAndUpdate(

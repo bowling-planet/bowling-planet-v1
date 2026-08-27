@@ -115,3 +115,4 @@ export const updateHomePageData = async (req: Request, res: Response): Promise<v
     res.status(500).json({ success: false, message: 'Server error updating home page data' });
   }
 };
+

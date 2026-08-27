@@ -23,6 +23,7 @@ const ProductsSection: FC<{ data?: any }> = ({ data }) => {
   const titleRef = useReveal()
   const { state, addToEnquiry, logCTAEvent } = useLeadTracker()
   const [activeIdx, setActiveIdx] = useState<number>(0)
+  const equipmentTags = data?.equipmentTags?.length ? data.equipmentTags : ATTRACTION_TAGS;
 
   const isAdded = (id: string) => state.enquiryCart.some(item => item.id === id)
 
@@ -424,7 +425,7 @@ const ProductsSection: FC<{ data?: any }> = ({ data }) => {
               Equipment Types We Cover
             </motion.p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
-              {ATTRACTION_TAGS.map((tag, i) => (
+              {equipmentTags.map((tag: string, i: number) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, scale: 0.9 }}

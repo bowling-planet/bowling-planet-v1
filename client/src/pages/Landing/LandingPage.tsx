@@ -34,7 +34,7 @@ const LandingPage: FC = () => {
       <SectionProgressNav />
 
       {/* 1. Hero (Dark) */}
-      <Hero data={data?.hero} />
+      <Hero data={data?.hero} services={data?.services} />
 
       {/* 1.5. Credibility Strip (Dark) */}
       <CredibilityStrip data={data?.stats} />

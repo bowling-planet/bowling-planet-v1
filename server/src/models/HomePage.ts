@@ -2,7 +2,10 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IHomePage extends Document {
   hero: {
+    eyebrow: string;
+    headingPrefix: string;
     rotatingActivities: string[];
+    subheadline: string;
   };
   stats: {
     yearsOfExperience: string;
@@ -26,8 +29,13 @@ export interface IHomePage extends Document {
     image?: { url: string; public_id: string };
   }[];
   services: {
+    step: string;
+    eyebrow: string;
     title: string;
     subtitle: string;
+    bullets: string[];
+    color: string;
+    rgb: string;
     image?: { url: string; public_id: string };
   }[];
   caseStudies: {
@@ -38,12 +46,16 @@ export interface IHomePage extends Document {
     metric: string;
     image?: { url: string; public_id: string };
   }[];
+  equipmentTags: string[];
 }
 
 const HomePageSchema: Schema = new Schema(
   {
     hero: {
-      rotatingActivities: { type: [String], default: [] },
+      eyebrow: { type: String, default: "India's Premier FEC Authority" },
+      headingPrefix: { type: String, default: "Consulting & Setup For" },
+      rotatingActivities: [{ type: String }],
+      subheadline: { type: String, default: "Turn your space into a **thriving entertainment business**. We provide end-to-end setup, equipment, and operations backed by **17+ years** and **50+ venues** across India." },
     },
     stats: {
       yearsOfExperience: { type: String, default: '17+' },
@@ -79,8 +91,13 @@ const HomePageSchema: Schema = new Schema(
     services: {
       type: [
         {
+          step: String,
+          eyebrow: String,
           title: String,
           subtitle: String,
+          bullets: [String],
+          color: String,
+          rgb: String,
           image: { url: String, public_id: String },
         },
       ],
@@ -98,6 +115,14 @@ const HomePageSchema: Schema = new Schema(
         },
       ],
       default: [],
+    },
+    equipmentTags: {
+      type: [String],
+      default: [
+        'Bowling Lanes', 'VR Gaming', 'Mini Golf', 'Trampoline Parks',
+        'Go-Kart Tracks', 'Cricket Simulators', 'Ziplines', 'Rope Courses',
+        'Soft Play Areas', 'Laser Tag', 'Bumper Cars', 'Rock Climbing'
+      ]
     },
   },
   { timestamps: true }
