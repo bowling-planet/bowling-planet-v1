@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { useLeadTracker } from '../../context/LeadTrackerContext';
 import { serviceDetailApi, type IServiceDetail } from '../../services/serviceDetailApi';
+import { getOptimizedImageUrl } from '../../utils/imageUtils';
 
 
 // Map of string icon names to Lucide components
@@ -115,10 +116,12 @@ export default function DynamicServicePage() {
       <header className="relative overflow-hidden border-b border-white/[0.08]">
         <div className="absolute inset-0">
           <img
-            src={data.header.image?.url}
+            src={getOptimizedImageUrl(data.header.image?.url)}
             alt=""
             aria-hidden
             className="h-full w-full object-cover object-center"
+            loading="eager"
+            decoding="async"
           />
           <div className="absolute inset-0 backdrop-blur-sm"
             style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.85) 45%, rgba(0,0,0,0.98) 100%), radial-gradient(ellipse 80% 60% at 70% 40%, rgba(167,139,250,0.15), transparent 60%)' }}
@@ -156,9 +159,11 @@ export default function DynamicServicePage() {
           {/* Image 60% */}
           <div className="lg:col-span-3 relative rounded-3xl overflow-hidden h-[400px] border border-white/[0.08]">
             <img
-              src={data.hero.image?.url}
+              src={getOptimizedImageUrl(data.hero.image?.url)}
               alt="Mission"
               className="h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6">
@@ -201,7 +206,7 @@ export default function DynamicServicePage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {data.metrics.slice(0, 3).map((m, i) => (
                 <div key={i} className="group relative rounded-2xl overflow-hidden border border-white/[0.08] h-[200px] cursor-default hover:border-opacity-30 transition-all duration-300">
-                  <img src={m.image?.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-20 group-hover:opacity-40 transition-opacity duration-500 scale-105 group-hover:scale-100" loading="lazy" />
+                  <img src={getOptimizedImageUrl(m.image?.url)} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-20 group-hover:opacity-40 transition-opacity duration-500 scale-105 group-hover:scale-100" loading="lazy" decoding="async" />
                   <div className="relative z-10 flex flex-col justify-end h-full p-7">
                     <p className="font-display text-5xl font-black leading-none mb-2" style={{ color: m.color }}>{counterValues[i]}{m.suffix}</p>
                     <p className="text-white font-semibold text-base">{m.label}</p>
@@ -258,7 +263,7 @@ export default function DynamicServicePage() {
                       {isActive && (
                         <div className="lg:hidden border border-t-0 rounded-b-xl overflow-hidden bg-[#0A0A0F]" style={{ borderColor: `${data.header.accentColor}66` }}>
                           <div className="relative h-[200px] overflow-hidden">
-                            <img src={f.image?.url} alt={f.title} className="h-full w-full object-cover opacity-80" />
+                            <img src={getOptimizedImageUrl(f.image?.url)} alt={f.title} className="h-full w-full object-cover opacity-80" loading="lazy" decoding="async" />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/10 to-transparent" />
                           </div>
                           <div className="px-5 py-4 flex items-start gap-3 -mt-6 relative z-10">
@@ -285,10 +290,11 @@ export default function DynamicServicePage() {
                     {data.features.map((f, idx) => (
                       <img
                         key={idx}
-                        src={f.image?.url}
+                        src={getOptimizedImageUrl(f.image?.url)}
                         alt={f.title}
                         className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${activeIndex === idx ? 'opacity-70 scale-100 z-10' : 'opacity-0 scale-105 z-0'}`}
                         loading="lazy"
+                        decoding="async"
                       />
                     ))}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/10 to-transparent z-20" />
@@ -323,7 +329,7 @@ export default function DynamicServicePage() {
                 const isWide = (i === 0 || i === 3) && data.gallery.length >= 4;
                 return (
                   <div key={i} className={`${isWide ? 'md:col-span-2' : ''} relative rounded-3xl overflow-hidden ${isWide && i===3 ? 'h-[240px]' : (i < 2 ? 'h-[280px]' : 'h-[240px]')} border border-white/[0.08] group`}>
-                    <img src={g.image?.url} alt={g.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                    <img src={getOptimizedImageUrl(g.image?.url)} alt={g.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
                     <div className={`absolute inset-0 ${isWide ? 'bg-gradient-to-r from-black/60 to-transparent' : 'bg-gradient-to-t from-black/70 to-transparent'} flex items-end ${isWide ? 'p-8' : 'p-6'}`}>
                       {isWide ? (
                         <div>

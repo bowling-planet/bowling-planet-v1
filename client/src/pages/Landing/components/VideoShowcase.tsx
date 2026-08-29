@@ -1,8 +1,32 @@
-import { type FC, useRef } from 'react'
+import { type FC, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const VideoShowcase: FC = () => {
   const containerRef = useRef<HTMLElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && videoRef.current) {
+            // Video is in view, play it
+            videoRef.current.play().catch(() => {})
+          } else if (videoRef.current) {
+            // Pause when out of view to save CPU/battery
+            videoRef.current.pause()
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <section
@@ -25,11 +49,11 @@ const VideoShowcase: FC = () => {
 
       <div className="relative mx-auto w-full max-w-[1200px] bg-black px-4 sm:px-6">
         <motion.video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.2 }}

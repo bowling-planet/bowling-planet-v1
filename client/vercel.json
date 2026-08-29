@@ -4,5 +4,25 @@
             "source": "/(.*)",
             "destination": "/"
         }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)\\.(jpg|jpeg|png|gif|webp|avif|mp4|webm|svg|ico)$",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        },
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "public, max-age=31536000, immutable"
+                }
+            ]
+        }
     ]
 }

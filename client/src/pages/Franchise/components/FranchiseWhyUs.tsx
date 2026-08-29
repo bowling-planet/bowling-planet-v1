@@ -6,6 +6,7 @@ import { type FC } from 'react'
 import { theme } from '../../../theme'
 import { useReveal } from '../../../hooks/useReveal'
 import type { IFranchiseWhyUs } from '../../../services/franchisePageApi'
+import { getOptimizedImageUrl } from '../../../utils/imageUtils'
 
 const HARDCODED_PILLARS = [
   {
@@ -127,9 +128,9 @@ const FranchiseWhyUs: FC<FranchiseWhyUsProps> = ({ pillars = [] }) => {
               }}
             >
               {/* Background Image with Gradient Overlay */}
-              <div className="absolute inset-0 z-0">
-                <img src={p.image} alt="" className="h-full w-full object-cover opacity-15 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-30" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/80 to-[#0A0A0F]/40" />
+              <div className="absolute inset-0 overflow-hidden rounded-xl border border-white/[0.08] bg-black group-hover:border-[#5FC1D1]/30 transition-colors duration-500">
+                <img src={getOptimizedImageUrl(p.image)} alt="" className="h-full w-full object-cover opacity-15 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-30" loading="lazy" decoding="async" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
               </div>
 
               {/* Giant Watermark Icon */}
