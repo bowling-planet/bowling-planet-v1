@@ -88,9 +88,9 @@ const SignupPage: FC = () => {
       const res = await authApi.verifyOtp({ email: form.email, otp, purpose: 'signup' })
       setSuccess('Account verified! Redirecting to dashboard...')
       if (res.user) {
-        // Log the user in context. Since they are authenticated, 
-        // the Navigate to="/admin" check below will instantly redirect them.
-        login(res.user)
+        setTimeout(() => {
+          login(res.user)
+        }, 1000)
       }
     } catch (err: any) {
       setError(err.message)

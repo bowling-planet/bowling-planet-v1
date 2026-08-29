@@ -70,9 +70,10 @@ const LoginPage: FC = () => {
     const otp = otpDigits.join('')
     try {
       const data = await authApi.verifyOtp({ email: form.email, otp, purpose: 'login' })
-      setGlobalUser(data.user)
       setSuccess('Login successful! Redirecting...')
-      setTimeout(() => { window.location.href = '/admin' }, 1000)
+      setTimeout(() => { 
+        setGlobalUser(data.user) 
+      }, 1000)
     } catch (err: any) {
       setError(err.message)
     } finally {
