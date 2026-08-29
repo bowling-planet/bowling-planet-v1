@@ -38,9 +38,9 @@ const InsightsPage = lazy(() => import('./pages/InsightsPage/InsightsPage'))
 const BlogDetailsPage = lazy(() => import('./pages/BlogDetailsPage/BlogDetailsPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage/ServicesPage'))
 const DynamicServicePage = lazy(() => import('./pages/ServicesPage/DynamicServicePage'))
-const LoginPage = lazy(() => import('./pages/Auth/LoginPage'))
-const SignupPage = lazy(() => import('./pages/Auth/SignupPage'))
-const ForgotPasswordPage = lazy(() => import('./pages/Auth/ForgotPasswordPage'))
+import LoginPage from './pages/Auth/LoginPage'
+import SignupPage from './pages/Auth/SignupPage'
+import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage'
 const AdminPage = lazy(() => import('./pages/admin/AdminPage'))
 import { AdminGuard } from './pages/admin/AdminGuard'
 import { ToastProvider } from './pages/admin/components/Toast'
