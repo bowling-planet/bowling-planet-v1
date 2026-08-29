@@ -1,28 +1,23 @@
-import { type FC, useRef, useEffect } from 'react'
+import { type FC, useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const VideoShowcase: FC = () => {
   const containerRef = useRef<HTMLElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
+  const [loadVideo, setLoadVideo] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && videoRef.current) {
-            // Video is in view, play it
-            videoRef.current.play().catch(() => {})
-          } else if (videoRef.current) {
-            // Pause when out of view to save CPU/battery
-            videoRef.current.pause()
-          }
-        })
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadVideo(true)
+          observer.disconnect()
+        }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "100px" } // Load slightly before it comes into view
     )
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current)
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
     }
 
     return () => observer.disconnect()
@@ -32,7 +27,7 @@ const VideoShowcase: FC = () => {
     <section
       id="video-showcase"
       ref={containerRef}
-      className="bg-black pt-[clamp(40px,7vw,100px)]"
+      className="bg-black pt-[clamp(40px,7vw,100px)] min-h-[50vh]"
     >
       <div className="mx-auto mb-[clamp(20px,4vw,48px)] max-w-[1100px] px-4 text-center sm:px-6">
         <motion.h2
@@ -48,18 +43,22 @@ const VideoShowcase: FC = () => {
       </div>
 
       <div className="relative mx-auto w-full max-w-[1200px] bg-black px-4 sm:px-6">
-        <motion.video
-          ref={videoRef}
-          muted
-          loop
-          playsInline
-          preload="none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
-          src="/showcase.mp4"
-          className="w-full max-h-[70vh] object-contain block mx-auto rounded-lg"
-        />
+        {loadVideo ? (
+          <motion.video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2 }}
+            src="/showcase.mp4"
+            className="w-full max-h-[70vh] object-contain block mx-auto rounded-lg bg-[#0A0A0F]"
+          />
+        ) : (
+          <div className="w-full max-h-[70vh] aspect-video mx-auto rounded-lg bg-[#0A0A0F]" />
+        )}
       </div>
     </section>
   )
