@@ -14,6 +14,7 @@ import TestimonialsCarousel from './components/TestimonialsCarousel'
 import { getProjectBySlug } from './services/projectDetailsApi'
 import { Building2, Plus, Check } from 'lucide-react'
 import { useLeadTracker } from '../../context/LeadTrackerContext'
+import { getOptimizedImageUrl } from '../../utils/imageUtils'
 
 const ProjectDetailsPage: FC = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -118,7 +119,7 @@ const ProjectDetailsPage: FC = () => {
           {thumb?.url ? (
             <div className="absolute inset-0">
               <img
-                src={thumb.url}
+                src={getOptimizedImageUrl(thumb.url)}
                 alt=""
                 aria-hidden
                 className="h-full w-full object-cover object-center"

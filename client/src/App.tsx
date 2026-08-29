@@ -17,6 +17,7 @@ import Layout from './components/Layout'
 import { theme } from './theme'
 import { AuthProvider } from './context/AuthContext'
 import { LeadTrackerProvider } from './context/LeadTrackerContext'
+import TopProgressBar from './components/common/TopProgressBar'
 
 const LandingPage = lazy(() => import('./pages/Landing/LandingPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage/AboutPage'))
@@ -69,6 +70,7 @@ export default function App() {
       <AuthProvider>
         <GlobalSettingsProvider>
           <BrowserRouter>
+            <TopProgressBar />
             <LeadTrackerProvider>
               <Suspense fallback={<RouteFallback />}>
                 <Routes>

@@ -1148,3 +1148,13 @@ body.nav-drawer-open .floating-widget {
   background: #F8FAFC;
   border-color: #94A3B8;
 }
+
+/* NProgress Customization */
+#nprogress .bar {
+  background: #5FC1D1 !important;
+  height: 3px !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #5FC1D1, 0 0 5px #5FC1D1 !important;
+}

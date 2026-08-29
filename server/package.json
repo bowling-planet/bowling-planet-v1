@@ -14,8 +14,10 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "apicache": "^1.6.3",
     "bcryptjs": "^3.0.3",
     "cloudinary": "^2.10.0",
+    "compression": "^1.8.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
@@ -31,7 +33,9 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@types/apicache": "^1.6.8",
     "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.8.1",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
