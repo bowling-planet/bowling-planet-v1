@@ -24,16 +24,31 @@ const ProductsSection: FC<{ data?: any }> = ({ data }) => {
   const { state, addToEnquiry, logCTAEvent } = useLeadTracker()
   const [activeIdx, setActiveIdx] = useState<number>(0)
   let equipmentTags = ATTRACTION_TAGS;
-  if (data?.equipmentTags?.length) {
-    // Sometimes the CMS saves arrays as a single stringified JSON array inside another array
-    if (data.equipmentTags.length === 1 && typeof data.equipmentTags[0] === 'string' && data.equipmentTags[0].startsWith('[')) {
-      try {
-        equipmentTags = JSON.parse(data.equipmentTags[0]);
-      } catch (e) {
-        equipmentTags = data.equipmentTags;
-      }
-    } else {
-      equipmentTags = data.equipmentTags;
+  if (data?.equipmentTags) {
+    let rawTags = data.equipmentTags;
+    
+    // 1. If it's a string, try parsing it
+    if (typeof rawTags === 'string' && rawTags.trim().startsWith('[')) {
+      try { rawTags = JSON.parse(rawTags); } catch (e) {}
+    }
+    
+    // 2. If it's an array where the first item is a stringified array (e.g. from a weird CMS save)
+    if (Array.isArray(rawTags) && rawTags.length === 1 && typeof rawTags[0] === 'string' && rawTags[0].trim().startsWith('[')) {
+      try { rawTags = JSON.parse(rawTags[0]); } catch (e) {}
+    }
+
+    // 3. Just in case it was double-stringified
+    if (Array.isArray(rawTags) && rawTags.length === 1 && typeof rawTags[0] === 'string' && rawTags[0].trim().startsWith('[')) {
+      try { rawTags = JSON.parse(rawTags[0]); } catch (e) {}
+    }
+
+    // 4. If it's still a single string with commas, split it
+    if (Array.isArray(rawTags) && rawTags.length === 1 && typeof rawTags[0] === 'string' && rawTags[0].includes(',')) {
+      rawTags = rawTags[0].split(',').map((s: string) => s.trim().replace(/^"|"$/g, ''));
+    }
+
+    if (Array.isArray(rawTags) && rawTags.length > 0) {
+      equipmentTags = rawTags;
     }
   }
 
