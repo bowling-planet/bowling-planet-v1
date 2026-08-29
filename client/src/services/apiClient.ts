@@ -127,7 +127,9 @@ export async function apiClient(endpoint: string, options: RequestInit = {}) {
     credentials: 'include' as RequestCredentials,
   };
 
-  let response = await fetch(url, config);
+  window.dispatchEvent(new Event('api:start'));
+  try {
+    let response = await fetch(url, config);
 
   // If unauthorized, attempt silent refresh
   if (response.status === 401) {
@@ -166,10 +168,16 @@ export async function apiClient(endpoint: string, options: RequestInit = {}) {
   // Helper to parse json automatically if ok
   if (response.ok) {
     const json = await response.json().catch(() => ({}));
+    window.dispatchEvent(new Event('api:end'));
     return json;
   }
 
   // If not ok, extract error message
   const errorJson = await response.json().catch(() => ({}));
+  window.dispatchEvent(new Event('api:end'));
   throw new Error(errorJson.message || `Request failed with status ${response.status}`);
+  } catch (err) {
+    window.dispatchEvent(new Event('api:end'));
+    throw err;
+  }
 }
