@@ -23,7 +23,19 @@ const ProductsSection: FC<{ data?: any }> = ({ data }) => {
   const titleRef = useReveal()
   const { state, addToEnquiry, logCTAEvent } = useLeadTracker()
   const [activeIdx, setActiveIdx] = useState<number>(0)
-  const equipmentTags = data?.equipmentTags?.length ? data.equipmentTags : ATTRACTION_TAGS;
+  let equipmentTags = ATTRACTION_TAGS;
+  if (data?.equipmentTags?.length) {
+    // Sometimes the CMS saves arrays as a single stringified JSON array inside another array
+    if (data.equipmentTags.length === 1 && typeof data.equipmentTags[0] === 'string' && data.equipmentTags[0].startsWith('[')) {
+      try {
+        equipmentTags = JSON.parse(data.equipmentTags[0]);
+      } catch (e) {
+        equipmentTags = data.equipmentTags;
+      }
+    } else {
+      equipmentTags = data.equipmentTags;
+    }
+  }
 
   const isAdded = (id: string) => state.enquiryCart.some(item => item.id === id)
 
