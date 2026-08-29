@@ -43,7 +43,7 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
         ) : (
           <div className="h-full w-full bg-[#1A1A24]" aria-hidden="true" />
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#111118] via-transparent to-transparent" />
+        {/* Removed vignette effect per user request */}
         <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/55 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#5FC1D1] backdrop-blur-sm">
           <Building2 size={11} />
           Project
