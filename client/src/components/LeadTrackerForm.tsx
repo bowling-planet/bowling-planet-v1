@@ -87,24 +87,24 @@ export function LeadTrackerForm({ sourceId, title = "Get in touch", subtitle = "
       <p style={{ color: theme.colors.text2, marginBottom: 24, fontSize: 14 }}>{subtitle}</p>
 
       <div style={{ marginBottom: 16 }}>
-        <label style={labelStyle}>Full Name *</label>
-        <input type="text" placeholder="Your name" value={form.name} onChange={update('name')} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'name')} />
+        <label htmlFor="lead-name" style={labelStyle}>Full Name *</label>
+        <input id="lead-name" autoComplete="name" type="text" placeholder="Your name" value={form.name} onChange={update('name')} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'name')} />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
         <div>
-          <label style={labelStyle}>Email *</label>
-          <input type="email" placeholder="you@example.com" value={form.email} onChange={update('email')} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'email')} />
+          <label htmlFor="lead-email" style={labelStyle}>Email *</label>
+          <input id="lead-email" autoComplete="email" type="email" placeholder="you@example.com" value={form.email} onChange={update('email')} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'email')} />
         </div>
         <div>
-          <label style={labelStyle}>Phone</label>
-          <input type="tel" placeholder="+91..." value={form.phone} onChange={update('phone')} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'phone')} />
+          <label htmlFor="lead-phone" style={labelStyle}>Phone</label>
+          <input id="lead-phone" autoComplete="tel" type="tel" placeholder="+91..." value={form.phone} onChange={update('phone')} onFocus={() => setFocused('phone')} onBlur={() => setFocused(null)} style={inputStyle(focused === 'phone')} />
         </div>
       </div>
 
       <div style={{ marginBottom: 24 }}>
-        <label style={labelStyle}>Message *</label>
-        <textarea placeholder="Tell us about your requirements..." value={form.message} onChange={update('message')} onFocus={() => setFocused('message')} onBlur={() => setFocused(null)} style={{ ...inputStyle(focused === 'message'), minHeight: 100, resize: 'vertical' }} />
+        <label htmlFor="lead-message" style={labelStyle}>Message *</label>
+        <textarea id="lead-message" placeholder="Tell us about your requirements..." value={form.message} onChange={update('message')} onFocus={() => setFocused('message')} onBlur={() => setFocused(null)} style={{ ...inputStyle(focused === 'message'), minHeight: 100, resize: 'vertical' }} />
       </div>
 
       <button type="submit" disabled={isSubmitting} style={{ width: '100%', padding: '16px', background: theme.colors.teal, color: 'white', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 16, cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.7 : 1 }}>

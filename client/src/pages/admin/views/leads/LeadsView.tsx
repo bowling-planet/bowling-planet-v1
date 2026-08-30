@@ -290,7 +290,7 @@ export const LeadsView: React.FC = () => {
                                   <a 
                                     href={`https://wa.me/${trimmedPhone.replace(/[^0-9]/g, '')}`} 
                                     target="_blank" 
-                                    rel="noreferrer"
+                                    rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                     style={{ 
                                       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',

@@ -252,7 +252,7 @@ export const CmsGlobalView: React.FC = () => {
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: theme.colors.prussianBlue }}>
                       {getPlatformIcon(link.platform)}
                     </div>
-                    <strong>{link.platform}:</strong> <a href={link.url} target="_blank" rel="noreferrer" style={{ color: theme.colors.prussianBlue }}>{link.url}</a>
+                    <strong>{link.platform}:</strong> <a href={link.url} target="_blank" rel="noopener noreferrer" style={{ color: theme.colors.prussianBlue }}>{link.url}</a>
                   </div>
                 )}
               </div>

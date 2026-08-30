@@ -115,7 +115,7 @@ export const LeadDetailView: React.FC = () => {
                             <a 
                               href={`https://wa.me/${trimmedPhone.replace(/[^0-9]/g, '')}`} 
                               target="_blank" 
-                              rel="noreferrer"
+                              rel="noopener noreferrer"
                               style={{ 
                                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                                 backgroundColor: '#25D366', color: 'white', padding: '4px', borderRadius: '4px',

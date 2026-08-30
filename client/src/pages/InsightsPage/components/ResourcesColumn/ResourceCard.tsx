@@ -27,8 +27,7 @@ const ResourceCard: FC<ResourceCardProps> = ({ resource }) => {
   return (
     <a
       href={resource.externalUrl}
-      target="_blank"
-      rel="noopener noreferrer"
+      target="_blank" rel="noopener noreferrer"
       style={{
         display: 'flex',
         flexDirection: 'column',

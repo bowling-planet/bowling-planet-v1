@@ -108,8 +108,7 @@ function WhatsAppCta({ matched, tier }: { matched: FranchiseType; tier: number }
       <a
         href={whatsappUrl}
         onClick={handleClick}
-        target="_blank"
-        rel="noopener noreferrer"
+        target="_blank" rel="noopener noreferrer"
         aria-label="Get in touch on WhatsApp"
         style={{
           display: 'inline-flex',
