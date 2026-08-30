@@ -121,8 +121,8 @@ const AboutPage: React.FC = () => {
   return (
     <div className="about-catalogue min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title="About Us"
-        description="Bowling Planet — FEC consulting, planning, supply and installation for malls, hotels and investors."
+        title="About Us | Bowling Planet"
+        description="Learn about Bowling Planet's journey as India's premier FEC consulting and bowling alley installation experts."
       />
 
       <div className="mx-auto max-w-[1200px] space-y-16 px-5 pb-16 pt-24 sm:space-y-24 sm:px-7 sm:pt-28">

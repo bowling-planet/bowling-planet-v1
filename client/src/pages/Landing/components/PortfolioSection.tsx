@@ -415,6 +415,8 @@ const mapProjectToCard = (p: IProjectSummary, i: number): ProjectCardData => ({
   description: p.description,
 })
 
+import OptimizedImage from '../../../components/common/OptimizedImage'
+
 const ProjectImage: FC<{ src: string; alt: string; className?: string }> = ({
   src,
   alt,
@@ -427,7 +429,7 @@ const ProjectImage: FC<{ src: string; alt: string; className?: string }> = ({
   }, [src])
 
   return (
-    <img
+    <OptimizedImage
       src={current}
       alt={alt}
       loading="lazy"

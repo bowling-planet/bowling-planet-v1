@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /api/
+
+Sitemap: https://www.bowlingplanet.co.in/api/sitemap.xml

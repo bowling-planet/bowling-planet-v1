@@ -64,6 +64,26 @@ const BlogDetailsPage: FC = () => {
         title={blog.title} 
         description={blog.excerpt || blog.title}
         ogImage={blog.coverImage?.url}
+        schemaMarkup={{
+          '@context': 'https://schema.org',
+          '@type': 'Article',
+          headline: blog.title,
+          description: blog.excerpt || blog.title,
+          image: blog.coverImage?.url,
+          author: {
+            '@type': 'Person',
+            name: blog.author || 'Bowling Planet',
+          },
+          datePublished: blog.publishedAt,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Bowling Planet',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://res.cloudinary.com/dzs0nvuqx/image/upload/v1731666687/bowling-planet-og_xzyxyz.jpg'
+            }
+          }
+        }}
       />
       <BlogHeader
         title={blog.title}

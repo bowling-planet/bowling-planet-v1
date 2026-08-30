@@ -51,23 +51,60 @@ const ProductItemDetailsPage: FC = () => {
   return (
     <div className="product-item-details-page min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title={item.title}
-        description={item.description || `Details about ${item.title}`}
+        title={`${item.title} | Products | Bowling Planet`}
+        description={item.description || `Buy ${item.title} at Bowling Planet. Get top-tier arcade machines and entertainment equipment.`}
         ogImage={item.thumbnail?.url}
-        schemaMarkup={{
-          '@context': 'https://schema.org',
-          '@type': 'Product',
-          name: item.title,
-          description: item.description,
-          image: item.thumbnail?.url,
-          ...(item.price && {
-            offers: {
-              '@type': 'Offer',
-              price: item.price,
-              priceCurrency: 'INR',
-            },
-          }),
-        }}
+        schemaMarkup={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: item.title,
+            description: item.description,
+            image: item.thumbnail?.url,
+            // Only add offers if there is a price to avoid warnings for missing price/currency
+            ...(item.price && {
+              offers: {
+                '@type': 'Offer',
+                price: item.price,
+                priceCurrency: 'INR',
+              },
+            }),
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://bowlingplanet.co.in'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Products',
+                item: 'https://bowlingplanet.co.in/products'
+              },
+              ...(item.baseProduct ? [{
+                '@type': 'ListItem',
+                position: 3,
+                name: item.baseProduct.title || 'Category',
+                item: `https://bowlingplanet.co.in/products/${item.baseProduct.slug}`
+              }, {
+                '@type': 'ListItem',
+                position: 4,
+                name: item.title,
+                item: `https://bowlingplanet.co.in/products/${item.baseProduct.slug}/${item.slug}`
+              }] : [{
+                '@type': 'ListItem',
+                position: 3,
+                name: item.title,
+                item: `https://bowlingplanet.co.in/products/${item.slug}`
+              }])
+            ]
+          }
+        ]}
       />
 
       <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-24 sm:px-7 sm:pt-28">

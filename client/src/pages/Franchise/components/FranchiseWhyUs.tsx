@@ -6,7 +6,7 @@ import { type FC } from 'react'
 import { theme } from '../../../theme'
 import { useReveal } from '../../../hooks/useReveal'
 import type { IFranchiseWhyUs } from '../../../services/franchisePageApi'
-import { getOptimizedImageUrl } from '../../../utils/imageUtils'
+import OptimizedImage from '../../../components/common/OptimizedImage'
 
 const HARDCODED_PILLARS = [
   {
@@ -129,7 +129,7 @@ const FranchiseWhyUs: FC<FranchiseWhyUsProps> = ({ pillars = [] }) => {
             >
               {/* Background Image with Gradient Overlay */}
               <div className="absolute inset-0 overflow-hidden rounded-xl border border-white/[0.08] bg-black group-hover:border-[#5FC1D1]/30 transition-colors duration-500">
-                <img src={getOptimizedImageUrl(p.image)} alt="" className="h-full w-full object-cover opacity-15 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-30" loading="lazy" decoding="async" />
+                <OptimizedImage src={p.image} alt="" className="h-full w-full object-cover opacity-15 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-30" loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
               </div>
 

@@ -68,8 +68,8 @@ const ProductsPage: FC = () => {
   return (
     <div className="products-catalogue min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title="Products & Equipment"
-        description="Explore our world-class entertainment products and equipment for your FEC."
+        title="Products & Equipment | Bowling Planet"
+        description="Explore our world-class entertainment products, arcade machines, VR setups, and bowling equipment for your FEC."
       />
 
       {/* Hero — isolated Apple-style product render */}

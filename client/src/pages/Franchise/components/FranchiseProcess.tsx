@@ -6,7 +6,7 @@ import { type FC } from 'react'
 import { theme } from '../../../theme'
 import { useReveal } from '../../../hooks/useReveal'
 import type { IFranchiseProcess } from '../../../services/franchisePageApi'
-import { getOptimizedImageUrl } from '../../../utils/imageUtils'
+import OptimizedImage from '../../../components/common/OptimizedImage'
 
 const HARDCODED_STEPS = [
   {
@@ -148,7 +148,7 @@ const FranchiseProcess: FC<FranchiseProcessProps> = ({ steps = [] }) => {
               >
                 {/* Top Image */}
                 <div className="relative w-full flex-grow overflow-hidden bg-black min-h-[140px]">
-                  <img src={getOptimizedImageUrl(step.image)} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                  <OptimizedImage src={step.image} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
                 </div>
 

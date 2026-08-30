@@ -6,7 +6,7 @@ interface SEOProps {
   description: string;
   canonicalUrl?: string;
   ogImage?: string;
-  schemaMarkup?: object;
+  schemaMarkup?: Record<string, any> | Record<string, any>[];
 }
 
 const SEO: FC<SEOProps> = ({

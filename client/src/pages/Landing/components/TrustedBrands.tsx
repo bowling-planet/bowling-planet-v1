@@ -8,6 +8,7 @@ import { type FC, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useReveal } from '../../../hooks/useReveal'
 import { X } from 'lucide-react'
+import OptimizedImage from '../../../components/common/OptimizedImage'
 
 interface BrandInfo {
   name: string
@@ -60,7 +61,7 @@ const BrandModal: FC<{ brand: BrandInfo; onClose: () => void }> = ({ brand, onCl
           </span>
         </div>
         {brand.logo ? (
-          <img
+          <OptimizedImage
             src={brand.logo}
             alt={brand.name}
             className="mb-4 h-16 sm:h-20 w-auto max-w-[250px] object-contain object-left drop-shadow-lg"
@@ -113,7 +114,7 @@ const BrandCard: FC<{
     </div>
     {brand.logo ? (
       <div className="flex flex-1 w-full items-center">
-        <img
+        <OptimizedImage
           src={brand.logo}
           alt={brand.name}
           className={`w-auto max-w-full object-contain object-left drop-shadow-md ${

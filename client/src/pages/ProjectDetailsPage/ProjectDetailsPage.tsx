@@ -108,8 +108,8 @@ const ProjectDetailsPage: FC = () => {
   return (
     <div className="project-details-page min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title={project.title}
-        description={project.description || `Read about the ${project.title} project`}
+        title={`${project.title} | Projects | Bowling Planet`}
+        description={project.description || `Explore ${project.title}, a premier family entertainment center and bowling alley project by Bowling Planet.`}
         ogImage={thumb?.url}
       />
 

@@ -60,8 +60,8 @@ const ProjectsPage: FC = () => {
   return (
     <div className="projects-catalogue min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title="Our Projects"
-        description="Explore the entertainment destinations and family entertainment centers we have built across India."
+        title="Our Projects & Installations | Bowling Planet"
+        description="Explore the world-class family entertainment centers, bowling alleys, and gaming zones we have built across India."
       />
 
       {/* Hero — 3D architectural wireframe backdrop */}

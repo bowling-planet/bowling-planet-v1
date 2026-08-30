@@ -95,8 +95,8 @@ const BaseProductDetailsPage: FC = () => {
   return (
     <div className="base-product-details-page min-h-[60vh] bg-black text-[#F5F5F7]">
       <SEO
-        title={`${data.title} | Products`}
-        description={data.description || `Browse ${data.title} equipment and variants.`}
+        title={`${data.title} | Products | Bowling Planet`}
+        description={data.description || `Browse world-class ${data.title} equipment and arcade variants at Bowling Planet.`}
         ogImage={data.thumbnail?.url}
       />
 

@@ -108,7 +108,7 @@ export default function DynamicServicePage() {
   return (
     <div className="service-consult bg-black text-[#F5F5F7] min-h-screen">
       <SEO
-        title={data.seo.title}
+        title={data.seo.title.includes('Bowling Planet') ? data.seo.title : `${data.seo.title} | Services | Bowling Planet`}
         description={data.seo.description}
       />
 

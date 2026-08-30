@@ -90,8 +90,8 @@ const ServicesPage: FC = () => {
   return (
     <div className="services-hub bg-black text-[#F5F5F7] min-h-screen">
       <SEO
-        title="Our Services - Bowling Planet"
-        description="End-to-end FEC consulting, pre-opening setup, and operations management by Bowling Planet. 150+ FECs launched across India."
+        title="Our Services | FEC Consulting & Setup | Bowling Planet"
+        description="End-to-end family entertainment center consulting, pre-opening setup, and operations management by Bowling Planet. 150+ FECs launched across India."
       />
 
       {/* ── PAGE HEADER (same as Projects/Products) ── */}

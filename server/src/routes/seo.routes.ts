@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { BaseProduct, ProductItem } from '../models/product';
 import Project from '../models/project';
 import Blog from '../models/blog';
+import { ServiceDetail } from '../models/ServiceDetail';
 
 const router = express.Router();
 
@@ -21,11 +22,12 @@ router.get('/sitemap.xml', async (req: Request, res: Response) => {
   }
 
   try {
-    const [baseProducts, productItems, projects, blogs] = await Promise.all([
+    const [baseProducts, productItems, projects, blogs, serviceDetails] = await Promise.all([
       BaseProduct.find({ status: 'active' }).select('slug updatedAt'),
       ProductItem.find({ status: 'active' }).populate('baseProduct', 'slug').select('slug updatedAt baseProduct'),
       Project.find({ isPublished: true, isDeleted: false }).select('slug updatedAt'),
       Blog.find({ isPublished: true, isDeleted: false }).select('slug updatedAt'),
+      ServiceDetail.find().select('slug updatedAt'),
     ]);
 
     const staticRoutes = [
@@ -33,6 +35,7 @@ router.get('/sitemap.xml', async (req: Request, res: Response) => {
       '/about',
       '/projects',
       '/products',
+      '/services',
       '/franchise',
       '/careers',
       '/contact',
@@ -58,6 +61,7 @@ router.get('/sitemap.xml', async (req: Request, res: Response) => {
       }),
       ...projects.map((p) => generateUrlNode(`/projects/${p.slug}`, p.updatedAt.toISOString().split('T')[0])),
       ...blogs.map((b) => generateUrlNode(`/blog/${b.slug}`, b.updatedAt.toISOString().split('T')[0])),
+      ...serviceDetails.map((s: any) => generateUrlNode(`/services/${s.slug}`, s.updatedAt.toISOString().split('T')[0])),
     ];
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

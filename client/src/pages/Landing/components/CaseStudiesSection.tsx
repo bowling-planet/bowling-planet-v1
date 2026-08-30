@@ -9,7 +9,7 @@ import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { getShowcaseTestimonials, type ITestimonialShowcase } from '../services'
-
+import OptimizedImage from '../../../components/common/OptimizedImage'
 
 interface CaseStudy {
   id: string
@@ -205,7 +205,7 @@ const TestimonialCarousel: FC = () => {
 
                 <div className="flex items-center gap-5">
                   {active.clientImage?.url ? (
-                    <img
+                    <OptimizedImage
                       src={active.clientImage.url}
                       alt={active.clientName}
                       loading="lazy"
@@ -228,16 +228,20 @@ const TestimonialCarousel: FC = () => {
           {/* Right: Image */}
           <div className="relative h-[350px] lg:h-auto overflow-hidden rounded-r-[40px] lg:rounded-l-none rounded-b-[40px]">
             <AnimatePresence mode="wait">
-              <motion.img
+              <motion.div
                 key={sideImageUrl}
-                src={sideImageUrl}
-                alt="Showcase"
                 initial={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
                 exit={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+                className="absolute inset-0 h-full w-full"
+              >
+                <OptimizedImage
+                  src={sideImageUrl}
+                  alt="Showcase"
+                  className="h-full w-full object-cover"
+                />
+              </motion.div>
             </AnimatePresence>
             <div className="absolute inset-0 bg-gradient-to-r from-[rgba(15,15,20,0.9)] via-transparent to-transparent lg:from-[rgba(15,15,20,1)] opacity-100" />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(15,15,20,0.95)] via-[rgba(15,15,20,0.4)] to-transparent lg:hidden" />
@@ -396,7 +400,7 @@ const CaseStudiesSection: FC<CaseStudiesSectionProps> = ({ data }) => {
                     'flex 0.45s cubic-bezier(0.22, 1, 0.36, 1), min-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, box-shadow 0.3s ease',
                 }}
               >
-                <img
+                <OptimizedImage
                   src={study.image}
                   alt={study.client}
                   loading="lazy"

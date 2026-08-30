@@ -6,7 +6,7 @@ import { type FC } from 'react'
 import { theme } from '../../../theme'
 import { useReveal } from '../../../hooks/useReveal'
 import type { IFranchiseOffering } from '../../../services/franchisePageApi'
-import { getOptimizedImageUrl } from '../../../utils/imageUtils'
+import OptimizedImage from '../../../components/common/OptimizedImage'
 
 const HARDCODED_MAJOR_ATTRACTIONS = [
   { id: '01', label: 'Bowling Infrastructure', desc: 'Professional lanes, string pinsetters, and premium ball returns. The ultimate anchor attraction.', size: 'large', color: '#5FC1D1', image: '/franchise/f_bowling.png' },
@@ -119,7 +119,7 @@ const FranchiseOfferings: FC<FranchiseOfferingsProps> = ({ offerings = [] }) => 
                   }}
                 >
                   <div className="relative w-full flex-grow overflow-hidden bg-black">
-                    <img src={getOptimizedImageUrl(item.image)} alt={item.label} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                    <OptimizedImage src={item.image} alt={item.label} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
                   </div>
 
                   {/* Subtle top accent line */}

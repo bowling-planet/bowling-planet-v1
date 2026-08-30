@@ -37,8 +37,8 @@ const FranchisePage: FC = () => {
   return (
     <div className="franchise-catalogue bg-black text-[#F5F5F7]">
       <SEO
-        title="Franchise Opportunities"
-        description="Partner with Bowling Planet and start your own world-class family entertainment center."
+        title="Bowling Alley Franchise Opportunities in India"
+        description="Partner with Bowling Planet to start your own world-class family entertainment center and bowling alley franchise with high ROI."
         schemaMarkup={{
           '@context': 'https://schema.org',
           '@type': 'FAQPage',

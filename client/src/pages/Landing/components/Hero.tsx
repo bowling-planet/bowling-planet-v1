@@ -9,6 +9,8 @@ import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from
 import { useReducedMotion } from '../../../hooks/useReducedMotion'
 import { ChevronDown } from 'lucide-react'
 
+import OptimizedImage from '../../../components/common/OptimizedImage'
+
 const ACTIVITIES = [
   'Bowling Lanes',
   'VR Gaming',
@@ -403,9 +405,10 @@ const Hero: FC<{ data?: any, services?: any[] }> = ({ data, services }) => {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <img
+              <OptimizedImage
                 src="/iaapa.png"
                 alt="IAAPA"
+                loading="eager"
                 style={{ height: 'clamp(40px, 8vw, 56px)', width: 'auto', maxWidth: 200, objectFit: 'contain', display: 'block' }}
               />
               <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(8.5px, 1.5vw, 10px)', color: '#fff', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3, borderLeft: '2px solid rgba(255,255,255,0.4)', paddingLeft: 'clamp(8px, 1.5vw, 12px)', letterSpacing: '0.1em' }}>Member<br />Certified</div>
@@ -434,9 +437,10 @@ const Hero: FC<{ data?: any, services?: any[] }> = ({ data, services }) => {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <img
+              <OptimizedImage
                 src="/iso.jpg"
                 alt="ISO"
+                loading="eager"
                 style={{ height: 'clamp(44px, 9vw, 64px)', width: 'auto', objectFit: 'contain', display: 'block', borderRadius: 4 }}
               />
               <div style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(8.5px, 1.5vw, 10px)', color: '#fff', fontWeight: 800, textTransform: 'uppercase', lineHeight: 1.3, borderLeft: '2px solid rgba(255,255,255,0.4)', paddingLeft: 'clamp(8px, 1.5vw, 12px)', letterSpacing: '0.1em' }}>9001:2015<br />Certified</div>
