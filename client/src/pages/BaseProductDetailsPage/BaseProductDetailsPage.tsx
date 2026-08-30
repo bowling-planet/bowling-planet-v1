@@ -75,7 +75,7 @@ const BaseProductDetailsPage: FC = () => {
 
   if (loading) {
     return (
-      <div className="base-product-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="base-product-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <Loader label="Loading category…" />
       </div>
     )
@@ -83,7 +83,7 @@ const BaseProductDetailsPage: FC = () => {
 
   if (error || !data) {
     return (
-      <div className="base-product-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="base-product-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <ErrorState message={error ?? 'Product category not found.'} onRetry={() => void load()} />
       </div>
     )
@@ -100,7 +100,7 @@ const BaseProductDetailsPage: FC = () => {
         ogImage={data.thumbnail?.url}
       />
 
-      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-24 sm:px-7 sm:pt-28">
+      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-32 sm:px-7 sm:pt-36">
         {/* Compact category bar — category thumbnail as backdrop */}
         {/* Added min-h-[280px] sm:min-h-[340px] and flex items-end to position the text neatly at the bottom */}
         <div className="relative mb-5 min-h-[240px] sm:min-h-[340px] flex items-end overflow-hidden rounded-2xl border border-[#5FC1D1]/20 p-4 sm:p-6">

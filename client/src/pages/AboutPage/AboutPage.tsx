@@ -125,7 +125,7 @@ const AboutPage: React.FC = () => {
         description="Learn about Bowling Planet's journey as India's premier FEC consulting and bowling alley installation experts."
       />
 
-      <div className="mx-auto max-w-[1200px] space-y-16 px-5 pb-16 pt-24 sm:space-y-24 sm:px-7 sm:pt-28">
+      <div className="mx-auto max-w-[1200px] space-y-16 px-5 pb-16 pt-32 sm:space-y-24 sm:px-7 sm:pt-36">
         {/* Standard Intro */}
         <header className="mb-16 text-center max-w-3xl mx-auto pt-8 flex flex-col items-center">
           <img src="/logo.png" alt="Bowling Planet" className="h-auto max-h-32 sm:max-h-36 w-auto max-w-[85vw] mb-6 object-contain" />

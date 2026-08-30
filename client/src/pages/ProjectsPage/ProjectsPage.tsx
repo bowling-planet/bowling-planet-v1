@@ -82,7 +82,7 @@ const ProjectsPage: FC = () => {
           />
         </div>
 
-        <div className="relative z-[1] mx-auto max-w-[1280px] px-5 pb-8 pt-24 sm:px-7 sm:pb-10 sm:pt-28">
+        <div className="relative z-[1] mx-auto max-w-[1280px] px-5 pb-8 pt-32 sm:px-7 sm:pb-10 sm:pt-36">
           <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
             <div>
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#5FC1D1]">

@@ -75,7 +75,7 @@ const ProjectDetailsPage: FC = () => {
 
   if (loading) {
     return (
-      <div className="project-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="project-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <Loader label="Loading project…" />
       </div>
     )
@@ -83,7 +83,7 @@ const ProjectDetailsPage: FC = () => {
 
   if (error || !project) {
     return (
-      <div className="project-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="project-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <div className="mx-auto max-w-xl text-center">
           {error ? (
             <ErrorState message={error instanceof Error ? error.message : 'Unable to load this project.'} onRetry={() => void refetch()} />
@@ -113,7 +113,7 @@ const ProjectDetailsPage: FC = () => {
         ogImage={thumb?.url}
       />
 
-      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-24 sm:px-7 sm:pt-28">
+      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-32 sm:px-7 sm:pt-36">
         {/* Compact project header — cover media as backdrop */}
         <div className="relative mb-5 overflow-hidden rounded-2xl border border-[#5FC1D1]/20 p-4 sm:p-5">
           {thumb?.url ? (

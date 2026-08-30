@@ -31,7 +31,7 @@ const ProductItemDetailsPage: FC = () => {
 
   if (loading) {
     return (
-      <div className="product-item-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="product-item-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <Loader label="Loading product…" />
       </div>
     )
@@ -39,7 +39,7 @@ const ProductItemDetailsPage: FC = () => {
 
   if (error || !item) {
     return (
-      <div className="product-item-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-28">
+      <div className="product-item-details-page flex min-h-[60vh] items-center justify-center bg-black px-5 pt-36">
         <ErrorState
           message={error ? error.message : 'Product not found.'}
           onRetry={() => void refetch()}
@@ -107,7 +107,7 @@ const ProductItemDetailsPage: FC = () => {
         ]}
       />
 
-      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-24 sm:px-7 sm:pt-28">
+      <div className="mx-auto max-w-[1280px] px-5 pb-16 pt-32 sm:px-7 sm:pt-36">
         <div className="mb-5">
           <ItemParentLink baseProduct={item.baseProduct} />
         </div>

@@ -54,7 +54,7 @@ const FranchisePage: FC = () => {
         }}
       />
 
-      <div className="mx-auto flex max-w-[1500px] flex-col pt-20 sm:pt-24 lg:grid lg:grid-cols-[minmax(300px,400px)_minmax(0,1fr)] lg:items-start lg:gap-8 lg:px-4">
+      <div className="mx-auto flex max-w-[1500px] flex-col pt-20 sm:pt-32 lg:grid lg:grid-cols-[minmax(300px,400px)_minmax(0,1fr)] lg:items-start lg:gap-8 lg:px-4">
         {/* Mobile: after Advantage (order-2). Desktop: left column */}
         <aside className="order-2 border-y border-white/[0.08] lg:order-1 lg:col-start-1 lg:border-y-0 lg:border-white/[0.08] lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] overflow-y-auto hide-scrollbar">
           <RoiCalculatorSection compact panel />

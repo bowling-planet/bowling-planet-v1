@@ -233,7 +233,7 @@ const Nav: FC = () => {
         }}
       >
         {/* Nav links */}
-        <nav aria-label="Mobile navigation links" style={{ padding: '12px 0', paddingTop: '76px', flex: 1 }}>
+        <nav aria-label="Mobile navigation links" style={{ padding: '12px 0', paddingTop: '110px', flex: 1 }}>
           {NAV_LINKS.map(({ label, path }, idx) => {
             const active = isActive(path)
             return (
