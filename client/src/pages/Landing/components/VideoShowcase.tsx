@@ -42,7 +42,7 @@ const VideoShowcase: FC = () => {
         </motion.h2>
       </div>
 
-      <div className="relative mx-auto w-full max-w-[1200px] bg-black px-4 sm:px-6">
+      <div className="relative w-full bg-black">
         {loadVideo ? (
           <motion.video
             autoPlay
@@ -54,10 +54,10 @@ const VideoShowcase: FC = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2 }}
             src="/showcase.mp4"
-            className="w-full max-h-[70vh] object-contain block mx-auto rounded-lg bg-[#0A0A0F]"
+            className="w-full h-[80vh] md:h-screen object-cover block mx-auto bg-[#0A0A0F]"
           />
         ) : (
-          <div className="w-full max-h-[70vh] aspect-video mx-auto rounded-lg bg-[#0A0A0F]" />
+          <div className="w-full h-[80vh] md:h-screen bg-[#0A0A0F]" />
         )}
       </div>
     </section>

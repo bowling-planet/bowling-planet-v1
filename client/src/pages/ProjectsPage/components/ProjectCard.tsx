@@ -54,18 +54,6 @@ const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
       </button>
 
       <div className="flex flex-1 flex-col gap-2.5 p-4">
-        {project.tags.length > 0 ? (
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 2).map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] font-medium text-[#A1A1A6]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        ) : null}
 
         <button type="button" onClick={goToDetails} className="cursor-pointer text-left">
           <h3 className="font-display text-base font-bold leading-snug text-[#F5F5F7] transition-colors group-hover:text-[#5FC1D1]">
